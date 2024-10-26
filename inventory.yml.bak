@@ -1,45 +1,28 @@
 
 # ................................................
 mylab:
-  hosts:
-    ryan9:
-      ansible_host: localhost
-      ansible_connection: local
-    dennuc:
-      ansible_host: dennuc.a0a0.org
-    nuc11:
-      ansible_host: nuc11.a0a0.org
-    monitor0:
-      ansible_host: monitor0.a0a0.org
-    monitor1:
-      ansible_host: monitor1.a0a0.org
-    fed40-1:
-      ansible_host: 192.168.40.101
-    ubuntu24:
-      ansible_host: 192.168.40.117
   children:
+    primary:
+      hosts:
+        localhost:
     collectors:
       hosts:
-        # monitor0:
-        #   influx_data_path: /mnt/measurements/influxdb
-        #   influx_defaults: etc-default-telegraf-linode
-        monitor1:
-          influx_data_path: /var/lib/influxdb
-          influx_defaults: etc-default-telegraf-local
-          influxdb_cert: "/etc/ssl/certs/x509.cer"
-          influxdb_key: "/etc/ssl/private/x509.key"
+        monitor0.a0a0.org:
+        :wqmonitor1.a0a0.org:
+
       #.........................................
       # collector only vars
-      vars: 
+      vars:
+        #influx_data_path: /mnt/measurements/influxdb
         influx_level: error
 
     clients:
       hosts:
-        ryan9:
-        dennuc:
-        nuc11:
-        monitor0:
-        monitor1:
+        ryan9.a0a0.org:
+        dennuc.a0a0.org:
+        nuc11.a0a0.org:
+        monitor0.a0a0.org:
+        monitor1.a0a0.org:
 
       #..........................................
       # client only vars

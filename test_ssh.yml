@@ -1,0 +1,17 @@
+---
+
+- name: test mylab ssh
+  hosts: clients
+  connection: local
+
+  tasks:
+
+    - ansible.builtin.shell:
+        cmd: /usr/bin/id && /usr/bin/uname -a
+      register: ssh_status
+      become: true
+        
+
+    - ansible.builtin.debug:
+        var: ssh_status.stdout
+

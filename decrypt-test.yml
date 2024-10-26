@@ -1,0 +1,16 @@
+---
+
+- name: dump vars
+  hosts: collectors
+  connection: local
+
+  tasks:
+
+    - ansible.builtin.debug:
+        var: promtail_loki_url
+
+    - ansible.builtin.debug:
+        var: cluster_nfs_mounts
+
+    - ansible.builtin.debug:
+        var: influx_data_path

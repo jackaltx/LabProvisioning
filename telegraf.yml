@@ -1,0 +1,5 @@
+---
+- name: Client monitoring Packages (telegraf)
+  hosts: clients
+  roles:
+    - telegraf

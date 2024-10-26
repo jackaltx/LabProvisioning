@@ -1,0 +1,14 @@
+---
+
+- name: Client monitoring Packages (telegraf and promtail)
+  hosts: localhost
+  connection: local
+
+  tasks:
+
+    - ansible.builtin.debug:
+        var: promtail_loki_url
+
+  roles:
+  
+    - promtail

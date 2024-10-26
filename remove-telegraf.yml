@@ -1,0 +1,11 @@
+---
+
+- name: Telegraf Removal
+  hosts: localhost
+  connection: local
+
+  vars:
+    telegraf_state: absent
+
+  roles:
+    - telegraf
