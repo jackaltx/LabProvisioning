@@ -1,0 +1,22 @@
+---
+
+- name: Install basic packages (more later)
+  hosts: localhost
+  connection: local
+
+  tasks:
+  
+  - name: "Basic Packages"
+    ansible.builtin.apt:
+      update_cache: true
+      pkg:
+      - vim
+      - tree
+      - curl
+      - socat
+      - sudo
+      - gpg
+      - wget
+      - ca-certificates 
+      - net-tools
+    become: true

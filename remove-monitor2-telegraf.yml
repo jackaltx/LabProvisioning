@@ -1,8 +1,7 @@
 ---
 
 - name: Telegraf Removal
-  hosts: localhost
-  connection: local
+  hosts: monitor2
 
   vars:
     telegraf_state: absent

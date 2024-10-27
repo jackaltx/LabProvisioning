@@ -17,7 +17,12 @@ mylab:
       ansible_host: 192.168.40.101
     ubuntu24:
       ansible_host: 192.168.40.117
+    monitor2:
+      ansible_host: 192.168.40.108
+
   children:
+
+    #......................................
     collectors:
       hosts:
         # monitor0:
@@ -28,6 +33,13 @@ mylab:
           influx_defaults: etc-default-telegraf-local
           influxdb_cert: "/etc/ssl/certs/x509.cer"
           influxdb_key: "/etc/ssl/private/x509.key"
+
+        monitor2:
+          influx_data_path: /var/lib/influxdb
+          influx_defaults: etc-default-telegraf-local
+          influxdb_cert: ""
+          influxdb_key: ""
+
       #.........................................
       # collector only vars
       vars: 
@@ -40,6 +52,7 @@ mylab:
         nuc11:
         monitor0:
         monitor1:
+        monitor2:
 
       #..........................................
       # client only vars

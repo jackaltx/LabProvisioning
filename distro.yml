@@ -1,0 +1,16 @@
+---
+- hosts: mylab
+  gather_facts: yes
+  become: false 
+  tasks:
+  - name: OS family  (ansible_os_family)
+    debug: msg="{{ ansible_os_family }}"
+
+  - name: Distribution (ansible_distribution)
+    debug: msg="{{ ansible_facts['distribution'] }}"
+
+  - name: Distribution version (ansible_distribution_version)
+    debug: msg="{{ ansible_distribution_version}}"
+  - name: Distribution major version (ansible_distribution_major_version)
+    debug: msg="{{ ansible_distribution_major_version }}"
+

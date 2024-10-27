@@ -1,5 +1,6 @@
 ---
 - name: Client monitoring Packages (telegraf)
   hosts: clients
+  gather_facts: yes
   roles:
     - telegraf
