@@ -1,16 +1,20 @@
 ---
 
 - name: Install basic packages (more later)
-  hosts: localhost
-  connection: local
+  #hosts: clients
+  hosts: test
 
   tasks:
   
-  - name: "Basic Packages"
+  - name: "Basic Member Packages"
     ansible.builtin.apt:
       update_cache: true
       pkg:
       - vim
+      - sudo
+      - gpg
+      - openssl
+      - htop
       - tree
       - curl
       - socat

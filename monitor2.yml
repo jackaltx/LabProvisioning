@@ -1,0 +1,6 @@
+---
+- name: "Service: Influxdb"
+  hosts: monitor2
+  roles:
+    - telegraf
+      #- influxdb

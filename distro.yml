@@ -14,3 +14,9 @@
   - name: Distribution major version (ansible_distribution_major_version)
     debug: msg="{{ ansible_distribution_major_version }}"
 
+  - name: Computer (ansible_host)
+    debug: msg="{{ ansible_host }}"
+
+  - name: Computer (ansible_hostname)
+    debug: msg="{{ ansible_hostname }}"
+
