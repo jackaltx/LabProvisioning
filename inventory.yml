@@ -23,6 +23,11 @@ mylab:
   children:
 
     #......................................
+    provisioner:
+      hosts:
+        ryan9:
+
+    #......................................
     collectors:
       hosts:
         # monitor0:
@@ -35,7 +40,7 @@ mylab:
           influxdb_key: "/etc/ssl/private/x509.key"
 
         monitor2:
-          influx_data_path: /var/lib/influxdb
+          #influx_data_path: /var/lib/influxdb
           influx_defaults: etc-default-telegraf-local
           influxdb_cert: ""
           influxdb_key: ""

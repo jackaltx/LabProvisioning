@@ -1,0 +1,51 @@
+---
+- name: Example of dynamically adding to dictionary
+  hosts: localhost
+  gather_facts: true
+  
+  vars:
+    # Initial empty dictionary
+    my_dictionary: {}
+    # Example initial dictionary with some values
+    results_dict: 
+      app1: running
+      app2: stopped
+
+  tasks:
+    # Example 1: Adding items from a command result
+    - name: Get some command output
+      command: hostname
+      register: host_output
+
+    - name: Add command result to dictionary
+      set_fact:
+        my_dictionary: "{{ my_dictionary | combine({  'hostname': host_output.stdout }) }}"
+
+    # Example 2: Adding multiple items from a loop
+    - name: Get status of multiple services
+      service_facts:
+      register: service_status
+
+    - name: Add service statuses to dictionary
+      set_fact:
+        results_dict: "{{ results_dict | combine({ item.key: item.value.state  }) }}"
+      loop: "{{ service_status.ansible_facts.services | dict2items }}"
+      when: item.key in ['sshd', 'httpd']
+
+    # Example 3: Adding nested dictionary from ansible facts
+    - name: Create nested dictionary with system info
+      set_fact:
+        my_dictionary: "{{ my_dictionary | combine({
+          'system': {
+            'distribution': ansible_distribution,
+            'version': ansible_distribution_version,
+            'memory': ansible_memtotal_mb
+          }
+        }) }}"
+
+    # Display results
+    - name: Show resulting dictionaries
+      debug:
+        msg:
+          - "My Dictionary: {{ my_dictionary }}"
+          - "Results Dictionary: {{ results_dict }}"
