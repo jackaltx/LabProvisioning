@@ -3,6 +3,7 @@
   hosts: monitor2
   vars:
     influx_operators_token: ""
+    influx_output1: false
 
   roles:
     - influxdb
