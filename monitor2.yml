@@ -1,8 +1,11 @@
 ---
 - name: "Service: Influxdb"
   hosts: monitor2
+  vars:
+    influx_operators_token: ""
+
   roles:
     - influxdb
-    #- telegraf
-    #- loki
-    #- alloy
+    - telegraf
+    - loki
+    - alloy

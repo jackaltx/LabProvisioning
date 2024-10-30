@@ -40,3 +40,14 @@
       #group: "{{ hostvars['ryan9'].local_group }}"
       owner: "{{ lookup('env', 'USER') }}"
       mode: 0664
+
+  - name: Populate service facts
+    ansible.builtin.service_facts:
+
+  - name: Create current systemd facts files
+    local_action: 
+      module: ansible.builtin.copy
+      content: "{{ ansible_facts.services | to_nice_json }}"
+      dest: "{{ lookup('env', 'PWD') }}/facts/{{ inventory_hostname }}-systemd.json"
+      owner: "{{ lookup('env', 'USER') }}"
+      mode: 0664
