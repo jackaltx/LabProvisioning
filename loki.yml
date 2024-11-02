@@ -1,5 +1,6 @@
 ---
-- name: "Service: Loki"
-  hosts: collectors
+- name: Deploy Loki using the default configuration
+  hosts: monitor2
+  become: true
   roles:
-    - loki
+    - role: grafana.grafana.loki

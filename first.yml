@@ -2,7 +2,7 @@
 
 - name: Install basic packages (more later)
   #hosts: clients
-  hosts: test
+  hosts: monitor2
 
   tasks:
   

@@ -19,8 +19,12 @@
     loki_state: absent
 
   roles:
+
+    # clients
     - telegraf
-    - influxdb
     - alloy
+    
+    # services
+    - influxdb
     - loki
 

@@ -1,9 +1,12 @@
 ---
-- name: "Service: Influxdb"
+- name: "Configure Monitor2"
   hosts: monitor2
+  
   vars:
     influx_operators_token: ""
     influx_output1: false
+    influx_force_reload: false
+    loki_force_reload: false
 
   roles:
     - influxdb
