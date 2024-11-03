@@ -1,0 +1,13 @@
+---
+- name: "Configure Metric Collectors"
+  hosts: metric_collectors
+  become: true
+  tasks:
+
+    - name: loading dashboards
+      ansible.builtin.command:
+        cmd: "influx apply -u {{ item }} -force yes"
+      loop:
+        - "https://raw.githubusercontent.com/influxdata/community-templates/master/linux_system/linux_system.yml"
+        - "https://raw.githubusercontent.com/influxdata/community-templates/master/influxdb2_oss_metrics/influxdb2_oss_metrics.yml"
+        - "https://raw.githubusercontent.com/influxdata/community-templates/master/windows_system/windows_system.yml"

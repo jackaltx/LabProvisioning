@@ -1,0 +1,114 @@
+
+# ................................................
+mylab:
+
+  #..........................................
+  # mylab vars
+  vars:
+    mount_nfs_share: true
+    cluster_nfs_mounts:
+      migration:
+        src: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          66663863376434626464616164356539623436613039333632303939333162663337333237633132
+          3563373261303466366235646236366338663966643531330a633230623132333132653366343666
+          62613839333262323036663036363863333164313061393935623935383664623663303133366330
+          6531643933626364320a323832613934383332373136363538346466613466353061353533393965
+          39373435623961306434316236666131626638326533353433626239393739393661316333666339
+          6564373164636564373634636263653331336536376232386136
+        path: /mnt/homee_migration
+        opts: rw,noatime,bg,rsize=131072,wsize=131072,hard,intr,timeo=150,retrans=3
+        state: ephemeral
+        fstype: nfs4
+
+  #........................................
+  # mylab hosts
+  hosts:
+    ryan9:
+      ansible_host: localhost
+      ansible_connection: local
+    dennuc:
+      ansible_host: dennuc.a0a0.org
+    nuc11:
+      ansible_host: nuc11.a0a0.org
+    monitor0:
+      ansible_host: monitor0.a0a0.org
+    monitor1:
+      ansible_host: monitor1.a0a0.org
+    # fed40-1:
+    #   ansible_host: 192.168.40.101
+    # ubuntu24:
+    #   ansible_host: 192.168.40.117
+    monitor2:
+      ansible_host: 192.168.40.107
+
+  children:
+
+    #......................................
+    provisioner:
+      hosts:
+        ryan9:
+
+
+
+
+    #......................................
+    metric_collectors:
+      hosts:
+        # monitor0:
+        #   influx_data_path: /mnt/measurements/influxdb
+        #   influx_defaults: etc-default-telegraf-linode
+        monitor1:
+          influx_data_path: /var/lib/influxdb
+          influx_defaults: etc-default-telegraf-local
+          influxdb_cert: "/etc/ssl/certs/x509.cer"
+          influxdb_key: "/etc/ssl/private/x509.key"
+
+          #telgraf2influx_configs.localhost.output: true
+          #telgraf2influx_configs.monitor0.output: false
+          #telgraf2influx_configs.monitor1.output: false
+
+        monitor2:
+          influx_data_path: /var/lib/influxdb
+          influx_defaults: etc-default-telegraf-local
+          influxdb_cert: ""
+          influxdb_key: ""
+
+          #telgraf2influx_configs.localhost.output: true
+          #telgraf2influx_configs.monitor0.output: false
+          #telgraf2influx_configs.monitor1.output: false
+
+
+      #.........................................
+      # metric_collectors only vars
+      vars: 
+        influx_level: error
+
+    #......................................
+    clients:
+      hosts:
+        ryan9:
+        dennuc:
+        nuc11:
+        #monitor0:
+        #monitor1:
+        #monitor2:
+
+        #telgraf2influx_configs.localhost.output: false
+        #telgraf2influx_configs.monitor0.output: true
+        #telgraf2influx_configs.monitor1.output: true
+
+
+      #..........................................
+      # client only vars ( alloy and telegraf)
+      # only promtail for now.  moving to alloy soon
+      vars:
+
+        promtail_loki_url: !vault |
+              $ANSIBLE_VAULT;1.1;AES256
+              62643833343536353635663337333830383163313361333135633031633033363132656530643831
+              3565373330366239663632396437356337376332366633370a366263613762613432666438643063
+              64626463313732303964316330373032623933626233666462623763343433306635376230623234
+              3761343135366432310a336264333339393634356637616264306162396466383330393366326566
+              33616637396565656135356130303031633338626266653262303763376162333661
+

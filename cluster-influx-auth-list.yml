@@ -1,0 +1,41 @@
+---
+- name: "Service: Influxdb"
+  hosts: metric_collectors
+  
+  tasks:
+
+  - name: get the auth list from a cmd, register output
+    ansible.builtin.command: '/usr/bin/influx auth list --json'
+    become: true
+    register: cmd_result
+    failed_when: cmd_result.rc != 0
+
+  - name: converting json to list of dictionaries
+    set_fact:
+      full_list: "{{ cmd_result.stdout| from_json }}"
+
+  - debug:
+      var: full_list
+      verbosity: 1
+ 
+  - set_fact:
+      influx_auth_list: "{{ influx_auth_list| default([]) + [{
+        'id': item.id,
+        'token': item.token,
+        'description': item.description
+      }] }}"
+    loop: "{{ full_list }}"
+
+  - debug:
+      var: influx_auth_list
+      verbosity: 1
+
+  - name: Create token file for this host
+    local_action: 
+      module: ansible.builtin.copy
+      content: "{{ influx_auth_list  | to_nice_yaml  }}"
+      dest: "{{ lookup('env', 'PWD') }}/data/influx-all-tokens-{{ ansible_hostname }}.yml"
+      owner: "{{ lookup('env', 'USER') }}"
+      mode: 0600
+
+

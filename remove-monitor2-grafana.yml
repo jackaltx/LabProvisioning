@@ -1,0 +1,12 @@
+---
+
+- name: Total Removal
+  hosts: monitor2
+
+  vars:
+    grafana_state: absent
+
+  roles:
+    - grafana
+    
+

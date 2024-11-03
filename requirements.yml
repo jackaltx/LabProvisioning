@@ -1,0 +1,8 @@
+---
+
+#
+# https://github.com/grafana/grafana-ansible-collection/tree/main?tab=readme-ov-file
+#
+collections:
+  - name: grafana.grafana
+    version: 1.0.0

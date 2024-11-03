@@ -1,0 +1,10 @@
+---
+- name: Deploy Loki using the default configuration
+  hosts: monitor2
+  become: true
+  vars:
+    grafana_security:
+      admin_user: admin
+      admin_password: "thisisatest"  
+  roles:
+    - role: grafana.grafana.grafana

@@ -1,0 +1,260 @@
+{
+    "ansible_facts": {
+        "ansible_all_ipv4_addresses": [
+            "192.168.40.209",
+            "10.9.0.8"
+        ],
+        "ansible_all_ipv6_addresses": [
+            "2600:1700:8c13:280f:be24:11ff:fec8:6513",
+            "fe80::be24:11ff:fec8:6513"
+        ],
+        "ansible_apparmor": {
+            "status": "enabled"
+        },
+        "ansible_architecture": "x86_64",
+        "ansible_cmdline": {
+            "BOOT_IMAGE": "/vmlinuz-6.1.0-26-amd64",
+            "quiet": true,
+            "ro": true,
+            "root": "/dev/mapper/lavnet--monitor--vg-root"
+        },
+        "ansible_date_time": {
+            "date": "2024-10-29",
+            "day": "29",
+            "epoch": "1730236528",
+            "epoch_int": "1730236528",
+            "hour": "16",
+            "iso8601": "2024-10-29T21:15:28Z",
+            "iso8601_basic": "20241029T161528412831",
+            "iso8601_basic_short": "20241029T161528",
+            "iso8601_micro": "2024-10-29T21:15:28.412831Z",
+            "minute": "15",
+            "month": "10",
+            "second": "28",
+            "time": "16:15:28",
+            "tz": "CDT",
+            "tz_dst": "CDT",
+            "tz_offset": "-0500",
+            "weekday": "Tuesday",
+            "weekday_number": "2",
+            "weeknumber": "44",
+            "year": "2024"
+        },
+        "ansible_default_ipv4": {
+            "address": "192.168.40.209",
+            "alias": "ens18",
+            "broadcast": "192.168.40.255",
+            "gateway": "192.168.40.1",
+            "interface": "ens18",
+            "macaddress": "bc:24:11:c8:65:13",
+            "mtu": 1500,
+            "netmask": "255.255.255.0",
+            "network": "192.168.40.0",
+            "prefix": "24",
+            "type": "ether"
+        },
+        "ansible_default_ipv6": {
+            "address": "2600:1700:8c13:280f:be24:11ff:fec8:6513",
+            "gateway": "fe80::72a7:41ff:fe66:e3b6",
+            "interface": "ens18",
+            "macaddress": "bc:24:11:c8:65:13",
+            "mtu": 1500,
+            "prefix": "64",
+            "scope": "global",
+            "type": "ether"
+        },
+        "ansible_distribution": "Debian",
+        "ansible_distribution_file_parsed": true,
+        "ansible_distribution_file_path": "/etc/os-release",
+        "ansible_distribution_file_variety": "Debian",
+        "ansible_distribution_major_version": "12",
+        "ansible_distribution_minor_version": "7",
+        "ansible_distribution_release": "bookworm",
+        "ansible_distribution_version": "12",
+        "ansible_dns": {
+            "domain": "a0a0.org",
+            "nameservers": [
+                "192.168.40.1"
+            ],
+            "search": [
+                "a0a0.org"
+            ]
+        },
+        "ansible_domain": "a0a0.org",
+        "ansible_effective_group_id": 1000,
+        "ansible_effective_user_id": 1000,
+        "ansible_ens18": {
+            "active": true,
+            "device": "ens18",
+            "ipv4": {
+                "address": "192.168.40.209",
+                "broadcast": "192.168.40.255",
+                "netmask": "255.255.255.0",
+                "network": "192.168.40.0",
+                "prefix": "24"
+            },
+            "ipv6": [
+                {
+                    "address": "2600:1700:8c13:280f:be24:11ff:fec8:6513",
+                    "prefix": "64",
+                    "scope": "global"
+                },
+                {
+                    "address": "fe80::be24:11ff:fec8:6513",
+                    "prefix": "64",
+                    "scope": "link"
+                }
+            ],
+            "macaddress": "bc:24:11:c8:65:13",
+            "module": "virtio_net",
+            "mtu": 1500,
+            "pciid": "virtio1",
+            "promisc": false,
+            "speed": -1,
+            "type": "ether"
+        },
+        "ansible_env": {
+            "DBUS_SESSION_BUS_ADDRESS": "unix:path=/run/user/1000/bus",
+            "HOME": "/home/lavender",
+            "LANG": "en_US.UTF-8",
+            "LOGNAME": "lavender",
+            "MOTD_SHOWN": "pam",
+            "PATH": "/usr/local/bin:/usr/bin:/bin:/usr/games",
+            "PWD": "/home/lavender",
+            "SHELL": "/bin/bash",
+            "SHLVL": "0",
+            "SSH_CLIENT": "192.168.40.69 56382 22",
+            "SSH_CONNECTION": "192.168.40.69 56382 192.168.40.209 22",
+            "SSH_TTY": "/dev/pts/1",
+            "TERM": "xterm-256color",
+            "USER": "lavender",
+            "XDG_RUNTIME_DIR": "/run/user/1000",
+            "XDG_SESSION_CLASS": "user",
+            "XDG_SESSION_ID": "218",
+            "XDG_SESSION_TYPE": "tty",
+            "_": "/bin/sh"
+        },
+        "ansible_fips": false,
+        "ansible_fqdn": "monitor1.a0a0.org",
+        "ansible_hostname": "monitor1",
+        "ansible_interfaces": [
+            "ens18",
+            "lo",
+            "wg0"
+        ],
+        "ansible_kernel": "6.1.0-26-amd64",
+        "ansible_kernel_version": "#1 SMP PREEMPT_DYNAMIC Debian 6.1.112-1 (2024-09-30)",
+        "ansible_lo": {
+            "active": true,
+            "device": "lo",
+            "ipv4": {
+                "address": "127.0.0.1",
+                "broadcast": "",
+                "netmask": "255.0.0.0",
+                "network": "127.0.0.0",
+                "prefix": "8"
+            },
+            "ipv6": [
+                {
+                    "address": "::1",
+                    "prefix": "128",
+                    "scope": "host"
+                }
+            ],
+            "mtu": 65536,
+            "promisc": false,
+            "type": "loopback"
+        },
+        "ansible_local": {},
+        "ansible_lsb": {
+            "codename": "bookworm",
+            "description": "Debian GNU/Linux 12 (bookworm)",
+            "id": "Debian",
+            "major_release": "12",
+            "release": "12"
+        },
+        "ansible_machine": "x86_64",
+        "ansible_machine_id": "c0d626649a504ed8a2ac9bd61916dbce",
+        "ansible_nodename": "monitor1",
+        "ansible_os_family": "Debian",
+        "ansible_pkg_mgr": "apt",
+        "ansible_proc_cmdline": {
+            "BOOT_IMAGE": "/vmlinuz-6.1.0-26-amd64",
+            "quiet": true,
+            "ro": true,
+            "root": "/dev/mapper/lavnet--monitor--vg-root"
+        },
+        "ansible_python": {
+            "executable": "/usr/bin/python3",
+            "has_sslcontext": true,
+            "type": "cpython",
+            "version": {
+                "major": 3,
+                "micro": 2,
+                "minor": 11,
+                "releaselevel": "final",
+                "serial": 0
+            },
+            "version_info": [
+                3,
+                11,
+                2,
+                "final",
+                0
+            ]
+        },
+        "ansible_python_version": "3.11.2",
+        "ansible_real_group_id": 1000,
+        "ansible_real_user_id": 1000,
+        "ansible_selinux": {
+            "status": "disabled"
+        },
+        "ansible_selinux_python_present": true,
+        "ansible_service_mgr": "systemd",
+        "ansible_ssh_host_key_ecdsa_public": "AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBDcYkfDQAZsyn/SpyDTVb5748dIrvJXKT1AUIiIBa5yOusbmDCyqPCIEXyp4kA7ap0oP3dJMnowOC2pQO5CmvK4=",
+        "ansible_ssh_host_key_ecdsa_public_keytype": "ecdsa-sha2-nistp256",
+        "ansible_ssh_host_key_ed25519_public": "AAAAC3NzaC1lZDI1NTE5AAAAILm2Umo8XRlcI53iXAcNTUXzhwdCvUzBs4jJtioinIZO",
+        "ansible_ssh_host_key_ed25519_public_keytype": "ssh-ed25519",
+        "ansible_ssh_host_key_rsa_public": "AAAAB3NzaC1yc2EAAAADAQABAAABgQDbxZfdvutizfM3cVF7fdHYV1GjXTcrxAz8+ihg/FiHkwRj6LGn9isSmvm2MhSTO0QjyNOjcPGgoGdES18ir8vglQ6fC430b+gQPkpbma/7yi5O+u8N2xP9ZtEru+Ta/lWnd2S6QtZRP9z3Taz/F5nlNekg/e1SQdoneM9aC5CTFPFUUviO5Iu+N3VzDTSip5ZmEX9LRVzDth9HIxJ3kdvm6WIhHt72dDhsuhOVgZYdbwbc0RqHLUxt2tWICk2sgHvo+jJ2V/VQdceYCL0PQQv5AXzNgUzLyV3qdWid91Z447YQ3Wkl5rjKzl8Ya6gjdGEjfzHWIEGNkZjUJjqTX2WLTg3PJXTxncVXB7IE3iji0E8n/u79Ivxsj/xRUqUutONwKeSRw5U3FW825ARUJfTXtq5wntXuQN78jzfvmoS6fxuB8loJAUPMKDBhdiSboUkG6yMlvqBcCfbbNeMgSszNneXK5tWhG9xJhwDY+k5idwqPv8z7rdi9fFLLTd7ulOM=",
+        "ansible_ssh_host_key_rsa_public_keytype": "ssh-rsa",
+        "ansible_system": "Linux",
+        "ansible_system_capabilities": [
+            ""
+        ],
+        "ansible_system_capabilities_enforced": "True",
+        "ansible_user_dir": "/home/lavender",
+        "ansible_user_gecos": "lavender,,,",
+        "ansible_user_gid": 1000,
+        "ansible_user_id": "lavender",
+        "ansible_user_shell": "/bin/bash",
+        "ansible_user_uid": 1000,
+        "ansible_userspace_architecture": "x86_64",
+        "ansible_userspace_bits": "64",
+        "ansible_wg0": {
+            "active": true,
+            "device": "wg0",
+            "ipv4": {
+                "address": "10.9.0.8",
+                "broadcast": "",
+                "netmask": "255.255.255.255",
+                "network": "10.9.0.8",
+                "prefix": "32"
+            },
+            "mtu": 1420,
+            "promisc": false,
+            "type": "tunnel"
+        },
+        "discovered_interpreter_python": "/usr/bin/python3",
+        "gather_subset": [
+            "!all",
+            "system",
+            "architecture",
+            "all_ipv4_addresses",
+            "all_ipv6_addresses",
+            "facter"
+        ],
+        "module_setup": true
+    },
+    "changed": false,
+    "failed": false
+}

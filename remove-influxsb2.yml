@@ -1,0 +1,19 @@
+---
+
+- name: Total Removal
+  hosts: monitor1 # metric_collectors
+
+  vars:
+    influxdb_state: absent
+    influxdb_delete_config: true
+    influxdb_delete_data: true
+
+    telegraf_state: absent
+    telegraf_delete_config: true
+    telegraf_delete_data: true
+    
+  roles:
+
+    - influxdb
+    
+  

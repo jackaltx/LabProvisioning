@@ -1,0 +1,5 @@
+---
+- hosts: monitor2
+
+  roles:
+    - grafana

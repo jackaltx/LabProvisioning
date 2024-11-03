@@ -1,0 +1,12 @@
+---
+- name: "Configure Metric Collectors"
+  hosts: metric_collectors
+  
+  vars:
+    influx_operators_token: ""
+    influx_force_reload: false
+    loki_force_reload: false
+
+  roles:
+    - influxdb
+    - telegraf

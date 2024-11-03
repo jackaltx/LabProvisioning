@@ -1,0 +1,6 @@
+- hosts: all
+  tasks:
+    - ansible.builtin.meta: clear_facts
+    - ansible.builtin.meta: clear_host_errors
+    - ansible.builtin.meta: flush_handlers
+    - ansible.builtin.meta: reset_connection

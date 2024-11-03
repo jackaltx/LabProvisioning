@@ -1,0 +1,5 @@
+---
+- name: "Service: Influxdb"
+  hosts: monitor1 # metric_collectors
+  roles:
+    - influxdb

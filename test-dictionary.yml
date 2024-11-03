@@ -1,0 +1,100 @@
+---
+- name: 'Jinja selectattr() and map() example with list of dictionaries'
+  hosts: localhost
+  gather_facts: false
+  vars:
+  # This is a list of dictionaries
+      bands:
+          - name: The Beatles
+            members:
+                - Lennon
+                - McCartney
+                - Harrison
+                - Starr
+            formed: 1960
+            decade: 60s
+
+          - name: The Eagles
+            members:
+                - Frey
+                - Henley
+                - Leadon
+                - Meisner
+            formed: 1971
+            decade: 70s
+
+          - name: Run DMC
+            members:
+                - Simmons
+                - McDaniels
+                - Mizell
+            formed: 1983
+            decade: 80s
+
+          - name: Red Hot Chili Peppers
+            members:
+                - Kiedis
+                - Smith
+                - Frusciante
+                - Balzary
+            formed: 1982
+            decade: 90s
+
+          - name: "Destiny's Child"
+            members:
+                - Knowles
+                - Rowland
+                - Williams
+            formed: 1990
+            decade: 00s
+
+          - name: "Black Eyed Peas"
+            members:
+                - Adams
+                - Lindo
+                - Gomez
+            formed: 1995
+            decade: 00s
+
+  tasks:
+
+      - name: Show what type of variable bands be
+        ansible.builtin.debug:
+            msg: "{{ bands | type_debug }}"
+
+      - name: Show what type of data the bands variable consists of
+        ansible.builtin.debug:
+            msg: "{{ item | type_debug }}"
+        loop: "{{ bands }}"
+
+      - name: List band members of all bands
+        ansible.builtin.debug:
+            msg: "{{ bands | selectattr('members', 'defined') | map(attribute='members') }}"
+
+      - name: List the years the bands were formed
+        ansible.builtin.debug:
+            msg: "{{ bands | selectattr('formed', 'defined') | map(attribute='formed') }}"
+
+      - name: List members of band formed in 1971
+        ansible.builtin.debug:
+            msg: "{{ bands | selectattr('formed', 'match', '1971') | map(attribute='members') }}"
+
+      - name: List band with a member named Starr
+        ansible.builtin.debug:
+            msg: "{{ bands | selectattr('members', 'search', 'Starr') | map(attribute='name') }}"
+
+      - name: List band name when band decade ends with 0s regardless of the decade
+        ansible.builtin.debug:
+            msg: "{{ bands | selectattr('decade', 'search', '^.0s$') | map(attribute='name') }}"
+
+      - name: List band name when band decade contains 00 in the name
+        ansible.builtin.debug:
+            msg: "{{ bands | selectattr('decade', 'search', '00') | map(attribute='name') }}"
+
+      - name: Loop through the the 80s and 90s bands and display a message if Run DMC is in the name
+        ansible.builtin.debug:
+            msg:
+                - !unsafe It's Tricky to rock a rhyme
+        loop: "{{ bands | selectattr('decade', 'search', '^[8-9]0s$') | map(attribute='name') }}"
+        when: "'run' in item | lower"
+...
