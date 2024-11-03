@@ -1,5 +1,0 @@
----
-- name: "Service: Influxdb"
-  hosts: collectors
-  roles:
-    - influxdb

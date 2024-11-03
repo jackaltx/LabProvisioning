@@ -1,152 +1,81 @@
-
-# ................................................
-mylab:
-  hosts:
-    ryan9:
-      ansible_host: localhost
-      ansible_connection: local
-    dennuc:
-      ansible_host: dennuc.a0a0.org
-    nuc11:
-      ansible_host: nuc11.a0a0.org
-    monitor0:
-      ansible_host: monitor0.a0a0.org
-    monitor1:
-      ansible_host: monitor1.a0a0.org
-    # fed40-1:
-    #   ansible_host: 192.168.40.101
-    # ubuntu24:
-    #   ansible_host: 192.168.40.117
-    monitor2:
-      ansible_host: 192.168.40.107
+---
+all:
 
   children:
-
-    #......................................
-    provisioner:
+    # ................................................
+    mylab:
       hosts:
+
         ryan9:
-
-
-    #......................................
-    log_collectors:
-      hosts:
-        monitor2
-
-      vars:
-        loki_s3_bucket: lavnet
-        loki_key_id: !vault |
-          $ANSIBLE_VAULT;1.1;AES256
-          62346663323534306231653232633966323635383439653839323566376334343937633833323936
-          3933373730613737376538613364363961653937633032380a333934633335373630303365393033
-          38306336363765363033343434346135663732333232343965613134353564316563343066633666
-          3039623165313762660a336165623732616263656662313932656535623832393934663338623335
-          66353534336630303335623333653166376336663932343638353362363234313032393731623066
-          3330356365343165646365366135303533653664653861633332
-        loki_access_key: !vault |
-          $ANSIBLE_VAULT;1.1;AES256
-          62646462346538643163626165366638303333663162366431396661626161633865333337353764
-          6130393163373966623639393665646662326437636265350a376532333634323432386461623561
-          33383334376236356231343761393033653436623862336235626666353030316362613664326363
-          3161363231666666350a613930356637366466613135613337306438656339366132323864616336
-          63633834613965623234393962323666326134396532626366313066653833336337636638303135
-          6337646330313365353731306636393130306265656431633538
-
-
-    #......................................
-    metric_collectors:
-      hosts:
-        # monitor0:
-        #   influx_data_path: /mnt/measurements/influxdb
-        #   influx_defaults: etc-default-telegraf-linode
-        monitor1:
-          influx_data_path: /var/lib/influxdb
-          influx_defaults: etc-default-telegraf-local
-          influxdb_cert: "/etc/ssl/certs/x509.cer"
-          influxdb_key: "/etc/ssl/private/x509.key"
-
-          influx_output1: true
-          influx_url1: "https://127.0.0.1:8086"
-          influx_output2: false
-
-        monitor2:
-          influx_data_path: /var/lib/influxdb
-          influx_defaults: etc-default-telegraf-local
-          influxdb_cert: ""
-          influxdb_key: ""
-          
-          influx_output1: true
-          influx_output2: false
-
-
-      #.........................................
-      # metric_collectors only vars
-      vars: 
-        influx_level: error
-
-        influx_output1: true
-        influx_url1: "http://127.0.0.1:8086"
-        influx_operators_token1: ""
-        influx_org1: "lavnet"
-        influx_bucket1: "telegraf"
-
-
-        # influx_output1: true
-        # influx_url1: "https://monitor1.a0a0.org"
-        # influx_operators_token1: !vault |
-        #   $ANSIBLE_VAULT;1.1;AES256
-        #   66323731373331373532313764363866323330633933383435396164326139353833616438373630
-        #   3139356639346435316634633938393262653239393037390a613163616539666462656264336133
-        #   32646465633839363535363137346336323539376466323266393438626466613661633161653861
-        #   6366393239306439310a663936343534663466643266373639386466343665623864363465643263
-        #   37396439363065613263336331323632393338383035343965373236356639323739316532376637
-        #   33623835373263336539626361326666346635356632623362663365616237323531623938626132
-        #   35616566303034623136316161386233396564343966333464313761353164356333313032333930
-        #   30663764336639346533323435643431346266376565346331373733646431616130646532353133
-        #   3161
-        # influx_bucket1: "lavnet"
-        # influx_org1: "lavnet"
-
-
-    #......................................
-    clients:
-      hosts:
-        ryan9:
+          ansible_host: localhost
+          ansible_connection: local
         dennuc:
+          ansible_host: dennuc.a0a0.org
         nuc11:
+          ansible_host: nuc11.a0a0.org
         monitor0:
+          ansible_host: monitor0.a0a0.org
         monitor1:
+          ansible_host: monitor1.a0a0.org
+        # fed40-1:
+        #   ansible_host: 192.168.40.101
+        # ubuntu24:
+        #   ansible_host: 192.168.40.117
         monitor2:
+          ansible_host: 192.168.40.107
 
-      #..........................................
-      # client only vars (promtail and telegraf)
-      # only promtail for now.  moving to alloy soon
-      vars:
+      vars: 
+        telegraf_outputs: []
 
-        promtail_loki_url: !vault |
-              $ANSIBLE_VAULT;1.1;AES256
-              62643833343536353635663337333830383163313361333135633031633033363132656530643831
-              3565373330366239663632396437356337376332366633370a366263613762613432666438643063
-              64626463313732303964316330373032623933626233666462623763343433306635376230623234
-              3761343135366432310a336264333339393634356637616264306162396466383330393366326566
-              33616637396565656135356130303031633338626266653262303763376162333661
+      children:
+        #......................................
+        provisioner:
+          hosts:
+            ryan9:
+        #......................................
+        metric_collectors:
+          hosts:
+            # monitor0:
+            #   influx_data_path: /mnt/measurements/influxdb
+            #   influx_defaults: etc-default-telegraf-linode
+            monitor1:
+              influx_data_path: /var/lib/influxdb
+              influx_defaults: etc-default-telegraf-local
+              influxdb_cert: "/etc/ssl/certs/x509.cer"
+              influxdb_key: "/etc/ssl/private/x509.key"
+              telegraf_outputs: [localhost]
 
-  #..........................................
-  # mylab vars
-  vars:
-    mount_nfs_share: true
-    cluster_nfs_mounts:
-      migration:
-        src: !vault |
-          $ANSIBLE_VAULT;1.1;AES256
-          66663863376434626464616164356539623436613039333632303939333162663337333237633132
-          3563373261303466366235646236366338663966643531330a633230623132333132653366343666
-          62613839333262323036663036363863333164313061393935623935383664623663303133366330
-          6531643933626364320a323832613934383332373136363538346466613466353061353533393965
-          39373435623961306434316236666131626638326533353433626239393739393661316333666339
-          6564373164636564373634636263653331336536376232386136
-        path: /mnt/homee_migration
-        opts: rw,noatime,bg,rsize=131072,wsize=131072,hard,intr,timeo=150,retrans=3
-        state: ephemeral
-        fstype: nfs4
+
+            monitor2:
+              influx_data_path: /var/lib/influxdb
+              influx_defaults: etc-default-telegraf-local
+              influxdb_cert: ""
+              influxdb_key: ""
+              telegraf_outputs: [localhost,monitor1]
+
+
+          #.........................................
+          # metric_collectors only vars
+          vars: 
+            influx_level: error
+
+        #......................................
+        # used to install common packages
+        clients:
+          hosts:
+            ryan9:
+            dennuc:
+            nuc11:
+            #monitor0:
+            #monitor1:
+            #monitor2:
+
+          #..........................................
+          # client only vars ( alloy and telegraf)
+          # only promtail for now.  moving to alloy soon
+          vars:
+
+            telegraf_outputs: [monitor0,monitor1]
+
+        
 
