@@ -8,5 +8,7 @@
     loki_force_reload: false
 
   roles:
+
+    - nfs-client
     - influxdb
     - telegraf

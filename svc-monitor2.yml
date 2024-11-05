@@ -3,12 +3,12 @@
   hosts: monitor2
   
   vars:
-    influx_operators_token: ""
-    influx_output1: false
     influx_force_reload: false
+    influx_force_configure: false
     loki_force_reload: false
 
   roles:
+    
     - influxdb
     - telegraf
     - loki

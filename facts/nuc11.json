@@ -71,18 +71,18 @@
                 "vlan_challenged": "off [fixed]"
             },
             "hw_timestamp_filters": [],
-            "id": "8000.6ac682ecd0bc",
+            "id": "8000.aa3edca51f02",
             "interfaces": [
                 "ln_IoTV27"
             ],
             "ipv6": [
                 {
-                    "address": "fe80::68c6:82ff:feec:d0bc",
+                    "address": "fe80::a83e:dcff:fea5:1f02",
                     "prefix": "64",
                     "scope": "link"
                 }
             ],
-            "macaddress": "6a:c6:82:ec:d0:bc",
+            "macaddress": "aa:3e:dc:a5:1f:02",
             "mtu": 1500,
             "promisc": false,
             "speed": 10000,
@@ -161,19 +161,20 @@
                 "vlan_challenged": "off [fixed]"
             },
             "hw_timestamp_filters": [],
-            "id": "8000.5a8d9c32d96c",
+            "id": "8000.32d743557108",
             "interfaces": [
-                "fwpr102p0",
-                "ln_LabV40"
+                "fwpr105p0",
+                "ln_LabV40",
+                "fwpr100p0"
             ],
             "ipv6": [
                 {
-                    "address": "fe80::588d:9cff:fe32:d96c",
+                    "address": "fe80::30d7:43ff:fe55:7108",
                     "prefix": "64",
                     "scope": "link"
                 }
             ],
-            "macaddress": "5a:8d:9c:32:d9:6c",
+            "macaddress": "32:d7:43:55:71:08",
             "mtu": 1500,
             "promisc": false,
             "speed": 10000,
@@ -252,18 +253,18 @@
                 "vlan_challenged": "off [fixed]"
             },
             "hw_timestamp_filters": [],
-            "id": "8000.36c2aa887901",
+            "id": "8000.06741b11ad21",
             "interfaces": [
                 "ln_PiFrmV11"
             ],
             "ipv6": [
                 {
-                    "address": "fe80::34c2:aaff:fe88:7901",
+                    "address": "fe80::474:1bff:fe11:ad21",
                     "prefix": "64",
                     "scope": "link"
                 }
             ],
-            "macaddress": "36:c2:aa:88:79:01",
+            "macaddress": "06:74:1b:11:ad:21",
             "mtu": 1500,
             "promisc": false,
             "speed": 10000,
@@ -277,11 +278,11 @@
         "ansible_all_ipv6_addresses": [
             "fe80::8aae:ddff:fe0a:c95d",
             "fe80::8aae:ddff:fe0a:c95d",
-            "fe80::588d:9cff:fe32:d96c",
+            "fe80::30d7:43ff:fe55:7108",
+            "fe80::a83e:dcff:fea5:1f02",
             "fe80::8aae:ddff:fe0a:c95d",
-            "fe80::34c2:aaff:fe88:7901",
-            "fe80::8aae:ddff:fe0a:c95d",
-            "fe80::68c6:82ff:feec:d0bc"
+            "fe80::474:1bff:fe11:ad21",
+            "fe80::8aae:ddff:fe0a:c95d"
         ],
         "ansible_apparmor": {
             "status": "enabled"
@@ -294,25 +295,25 @@
             "root": "/dev/mapper/pve-root"
         },
         "ansible_date_time": {
-            "date": "2024-10-29",
-            "day": "29",
-            "epoch": "1730236528",
-            "epoch_int": "1730236528",
-            "hour": "16",
-            "iso8601": "2024-10-29T21:15:28Z",
-            "iso8601_basic": "20241029T161528448283",
-            "iso8601_basic_short": "20241029T161528",
-            "iso8601_micro": "2024-10-29T21:15:28.448283Z",
-            "minute": "15",
-            "month": "10",
-            "second": "28",
-            "time": "16:15:28",
-            "tz": "CDT",
+            "date": "2024-11-04",
+            "day": "04",
+            "epoch": "1730742376",
+            "epoch_int": "1730742376",
+            "hour": "11",
+            "iso8601": "2024-11-04T17:46:16Z",
+            "iso8601_basic": "20241104T114616943409",
+            "iso8601_basic_short": "20241104T114616",
+            "iso8601_micro": "2024-11-04T17:46:16.943409Z",
+            "minute": "46",
+            "month": "11",
+            "second": "16",
+            "time": "11:46:16",
+            "tz": "CST",
             "tz_dst": "CDT",
-            "tz_offset": "-0500",
-            "weekday": "Tuesday",
-            "weekday_number": "2",
-            "weeknumber": "44",
+            "tz_offset": "-0600",
+            "weekday": "Monday",
+            "weekday_number": "1",
+            "weeknumber": "45",
             "year": "2024"
         },
         "ansible_default_ipv4": {
@@ -336,7 +337,7 @@
         "ansible_distribution_major_version": "12",
         "ansible_distribution_minor_version": "7",
         "ansible_distribution_release": "bookworm",
-        "ansible_distribution_version": "12",
+        "ansible_distribution_version": "12.7",
         "ansible_dns": {
             "nameservers": [
                 "192.168.40.1"
@@ -675,14 +676,14 @@
             "PWD": "/home/lavender",
             "SHELL": "/bin/bash",
             "SHLVL": "0",
-            "SSH_CLIENT": "192.168.40.69 56334 22",
-            "SSH_CONNECTION": "192.168.40.69 56334 192.168.101.65 22",
+            "SSH_CLIENT": "192.168.40.69 34792 22",
+            "SSH_CONNECTION": "192.168.40.69 34792 192.168.101.65 22",
             "SSH_TTY": "/dev/pts/0",
             "TERM": "xterm-256color",
             "USER": "lavender",
             "XDG_RUNTIME_DIR": "/run/user/1000",
             "XDG_SESSION_CLASS": "user",
-            "XDG_SESSION_ID": "241",
+            "XDG_SESSION_ID": "210",
             "XDG_SESSION_TYPE": "tty",
             "_": "/bin/sh"
         },
@@ -759,12 +760,12 @@
                 "vlan_challenged": "off [fixed]"
             },
             "hw_timestamp_filters": [],
-            "id": "8000.8e1bfd98d82a",
+            "id": "8000.1e96691fcff1",
             "interfaces": [
                 "fwln100i0",
                 "tap100i0"
             ],
-            "macaddress": "8e:1b:fd:98:d8:2a",
+            "macaddress": "1e:96:69:1f:cf:f1",
             "mtu": 1500,
             "promisc": false,
             "speed": 10000,
@@ -772,9 +773,9 @@
             "timestamping": [],
             "type": "bridge"
         },
-        "ansible_fwbr102i0": {
+        "ansible_fwbr105i0": {
             "active": true,
-            "device": "fwbr102i0",
+            "device": "fwbr105i0",
             "features": {
                 "esp_hw_offload": "off [fixed]",
                 "esp_tx_csum_hw_offload": "off [fixed]",
@@ -843,12 +844,12 @@
                 "vlan_challenged": "off [fixed]"
             },
             "hw_timestamp_filters": [],
-            "id": "8000.8200f32a5a2a",
+            "id": "8000.661581b6047c",
             "interfaces": [
-                "tap102i0",
-                "fwln102i0"
+                "tap105i0",
+                "fwln105i0"
             ],
-            "macaddress": "82:00:f3:2a:5a:2a",
+            "macaddress": "66:15:81:b6:04:7c",
             "mtu": 1500,
             "promisc": false,
             "speed": 10000,
@@ -927,16 +928,16 @@
                 "vlan_challenged": "off [fixed]"
             },
             "hw_timestamp_filters": [],
-            "macaddress": "8e:1b:fd:98:d8:2a",
+            "macaddress": "1e:96:69:1f:cf:f1",
             "mtu": 1500,
             "promisc": true,
             "speed": 10000,
             "timestamping": [],
             "type": "ether"
         },
-        "ansible_fwln102i0": {
+        "ansible_fwln105i0": {
             "active": true,
-            "device": "fwln102i0",
+            "device": "fwln105i0",
             "features": {
                 "esp_hw_offload": "off [fixed]",
                 "esp_tx_csum_hw_offload": "off [fixed]",
@@ -1005,7 +1006,7 @@
                 "vlan_challenged": "off [fixed]"
             },
             "hw_timestamp_filters": [],
-            "macaddress": "82:00:f3:2a:5a:2a",
+            "macaddress": "66:15:81:b6:04:7c",
             "mtu": 1500,
             "promisc": true,
             "speed": 10000,
@@ -1083,16 +1084,16 @@
                 "vlan_challenged": "off [fixed]"
             },
             "hw_timestamp_filters": [],
-            "macaddress": "fe:9f:f8:95:de:d8",
+            "macaddress": "9a:54:89:b9:d8:cd",
             "mtu": 1500,
             "promisc": true,
             "speed": 10000,
             "timestamping": [],
             "type": "ether"
         },
-        "ansible_fwpr102p0": {
+        "ansible_fwpr105p0": {
             "active": true,
-            "device": "fwpr102p0",
+            "device": "fwpr105p0",
             "features": {
                 "esp_hw_offload": "off [fixed]",
                 "esp_tx_csum_hw_offload": "off [fixed]",
@@ -1161,7 +1162,7 @@
                 "vlan_challenged": "off [fixed]"
             },
             "hw_timestamp_filters": [],
-            "macaddress": "1a:de:01:d1:28:c4",
+            "macaddress": "d2:59:d5:b5:55:46",
             "mtu": 1500,
             "promisc": true,
             "speed": 10000,
@@ -1170,33 +1171,33 @@
         },
         "ansible_hostname": "nuc11",
         "ansible_interfaces": [
+            "ln_PiFrmV11",
+            "pr_LabV40",
+            "LabV40",
+            "enp89s0.11",
+            "wlo1",
+            "fwpr105p0",
+            "fwln100i0",
             "ln_LabV40",
             "fwbr100i0",
-            "enp89s0.40",
-            "IoTV27",
-            "tap102i0",
-            "lo",
-            "fwpr102p0",
-            "vmbr0v40",
-            "fwln100i0",
-            "enp89s0.27",
-            "fwpr100p0",
-            "LabV40",
             "pr_PiFrmV11",
-            "wlo1",
-            "fwbr102i0",
-            "ln_IoTV27",
-            "enp89s0.11",
+            "enp89s0.40",
             "enp89s0",
-            "PiFrmV11",
-            "pr_IoTV27",
-            "vmbr0v11",
-            "fwln102i0",
+            "enp89s0.27",
+            "fwln105i0",
+            "vmbr0v40",
+            "IoTV27",
+            "ln_IoTV27",
             "tap100i0",
+            "vmbr0v11",
+            "lo",
+            "pr_IoTV27",
             "vmbr0v27",
-            "pr_LabV40",
+            "fwbr105i0",
+            "PiFrmV11",
             "vmbr0",
-            "ln_PiFrmV11"
+            "tap105i0",
+            "fwpr100p0"
         ],
         "ansible_kernel": "6.8.12-2-pve",
         "ansible_kernel_version": "#1 SMP PREEMPT_DYNAMIC PMX 6.8.12-2 (2024-09-05T10:03Z)",
@@ -1271,7 +1272,7 @@
                 "vlan_challenged": "off [fixed]"
             },
             "hw_timestamp_filters": [],
-            "macaddress": "6a:c6:82:ec:d0:bc",
+            "macaddress": "aa:3e:dc:a5:1f:02",
             "mtu": 1500,
             "promisc": true,
             "speed": 10000,
@@ -1349,7 +1350,7 @@
                 "vlan_challenged": "off [fixed]"
             },
             "hw_timestamp_filters": [],
-            "macaddress": "5a:8d:9c:32:d9:6c",
+            "macaddress": "32:d7:43:55:71:08",
             "mtu": 1500,
             "promisc": true,
             "speed": 10000,
@@ -1427,7 +1428,7 @@
                 "vlan_challenged": "off [fixed]"
             },
             "hw_timestamp_filters": [],
-            "macaddress": "36:c2:aa:88:79:01",
+            "macaddress": "06:74:1b:11:ad:21",
             "mtu": 1500,
             "promisc": true,
             "speed": 10000,
@@ -1525,6 +1526,20 @@
             "type": "loopback"
         },
         "ansible_local": {},
+        "ansible_locally_reachable_ips": {
+            "ipv4": [
+                "127.0.0.0/8",
+                "127.0.0.1",
+                "192.168.101.65"
+            ],
+            "ipv6": [
+                "::1",
+                "fe80::474:1bff:fe11:ad21",
+                "fe80::30d7:43ff:fe55:7108",
+                "fe80::8aae:ddff:fe0a:c95d",
+                "fe80::a83e:dcff:fea5:1f02"
+            ]
+        },
         "ansible_lsb": {
             "codename": "bookworm",
             "description": "Debian GNU/Linux 12 (bookworm)",
@@ -1608,7 +1623,7 @@
                 "vlan_challenged": "off [fixed]"
             },
             "hw_timestamp_filters": [],
-            "macaddress": "d2:07:d4:f3:e4:6c",
+            "macaddress": "0a:c0:45:84:84:11",
             "mtu": 1500,
             "promisc": true,
             "speed": 10000,
@@ -1686,7 +1701,7 @@
                 "vlan_challenged": "off [fixed]"
             },
             "hw_timestamp_filters": [],
-            "macaddress": "4e:36:5a:4e:29:13",
+            "macaddress": "fe:8b:3b:ef:20:f1",
             "mtu": 1500,
             "promisc": true,
             "speed": 10000,
@@ -1764,7 +1779,7 @@
                 "vlan_challenged": "off [fixed]"
             },
             "hw_timestamp_filters": [],
-            "macaddress": "fa:34:11:e5:20:4c",
+            "macaddress": "5e:24:6c:e5:e9:e5",
             "mtu": 1500,
             "promisc": true,
             "speed": 10000,
@@ -1886,16 +1901,16 @@
                 "vlan_challenged": "off [fixed]"
             },
             "hw_timestamp_filters": [],
-            "macaddress": "2e:5a:88:97:11:a4",
+            "macaddress": "3a:4c:f8:76:2a:b0",
             "mtu": 1500,
             "promisc": true,
             "speed": 10000,
             "timestamping": [],
             "type": "ether"
         },
-        "ansible_tap102i0": {
+        "ansible_tap105i0": {
             "active": true,
-            "device": "tap102i0",
+            "device": "tap105i0",
             "features": {
                 "esp_hw_offload": "off [fixed]",
                 "esp_tx_csum_hw_offload": "off [fixed]",
@@ -1964,7 +1979,7 @@
                 "vlan_challenged": "off [fixed]"
             },
             "hw_timestamp_filters": [],
-            "macaddress": "3a:f4:75:41:41:16",
+            "macaddress": "06:5e:03:8a:73:d6",
             "mtu": 1500,
             "promisc": true,
             "speed": 10000,
@@ -2027,7 +2042,7 @@
                 "tx_fcoe_segmentation": "off [requested on]",
                 "tx_gre_csum_segmentation": "on",
                 "tx_gre_segmentation": "on",
-                "tx_gso_list": "on",
+                "tx_gso_list": "off [requested on]",
                 "tx_gso_partial": "on",
                 "tx_gso_robust": "off [requested on]",
                 "tx_ipxip4_segmentation": "on",
@@ -2035,14 +2050,14 @@
                 "tx_lockless": "on [fixed]",
                 "tx_nocache_copy": "off",
                 "tx_scatter_gather": "on",
-                "tx_scatter_gather_fraglist": "on",
-                "tx_sctp_segmentation": "on",
+                "tx_scatter_gather_fraglist": "off [requested on]",
+                "tx_sctp_segmentation": "off [requested on]",
                 "tx_tcp6_segmentation": "on",
                 "tx_tcp_ecn_segmentation": "on",
                 "tx_tcp_mangleid_segmentation": "on",
                 "tx_tcp_segmentation": "on",
                 "tx_tunnel_remcsum_segmentation": "on",
-                "tx_udp_segmentation": "on",
+                "tx_udp_segmentation": "off [requested on]",
                 "tx_udp_tnl_csum_segmentation": "on",
                 "tx_udp_tnl_segmentation": "on",
                 "tx_vlan_offload": "on",
@@ -2052,8 +2067,7 @@
             "hw_timestamp_filters": [],
             "id": "8000.88aedd0ac95d",
             "interfaces": [
-                "enp89s0",
-                "fwpr100p0"
+                "enp89s0"
             ],
             "ipv4": {
                 "address": "192.168.101.65",
@@ -2072,7 +2086,7 @@
             "macaddress": "88:ae:dd:0a:c9:5d",
             "mtu": 1500,
             "promisc": false,
-            "speed": 10000,
+            "speed": 1000,
             "stp": false,
             "timestamping": [],
             "type": "bridge"

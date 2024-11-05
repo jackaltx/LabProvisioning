@@ -6,13 +6,13 @@
         "ansible_all_ipv6_addresses": [
             "2600:1700:8c13:280f:da02:6a68:9cd9:3d6d",
             "fe80::5f23:5f7e:5865:7103",
-            "2600:1700:8c13:280f:b085:e0e2:ea65:ca5a",
-            "2600:1700:8c13:280f:3537:d60b:a9c5:e11c",
-            "2600:1700:8c13:280f:8f9:8191:e9a1:706",
-            "2600:1700:8c13:280f:9cb6:c2d1:ebdb:a0ff",
-            "2600:1700:8c13:280f:2f6f:dac0:2ef1:74af",
-            "2600:1700:8c13:280f:301b:3fb9:dbea:b309",
-            "2600:1700:8c13:280f:5849:f6a:8fd6:d1d7"
+            "2600:1700:8c13:280f:2fca:b63f:79de:b939",
+            "2600:1700:8c13:280f:3a81:a9fc:5577:c6ad",
+            "2600:1700:8c13:280f:b043:aaf5:1160:dd76",
+            "2600:1700:8c13:280f:533a:912:ff3f:493f",
+            "2600:1700:8c13:280f:3811:8418:b89f:9c16",
+            "2600:1700:8c13:280f:f414:b7e0:b506:41b8",
+            "2600:1700:8c13:280f:b085:e0e2:ea65:ca5a"
         ],
         "ansible_apparmor": {
             "status": "enabled"
@@ -25,25 +25,25 @@
             "root": "UUID=54aae766-e690-4c8a-8ba5-f07a82445d5f"
         },
         "ansible_date_time": {
-            "date": "2024-10-29",
-            "day": "29",
-            "epoch": "1730236528",
-            "epoch_int": "1730236528",
-            "hour": "16",
-            "iso8601": "2024-10-29T21:15:28Z",
-            "iso8601_basic": "20241029T161528498866",
-            "iso8601_basic_short": "20241029T161528",
-            "iso8601_micro": "2024-10-29T21:15:28.498866Z",
-            "minute": "15",
-            "month": "10",
-            "second": "28",
-            "time": "16:15:28",
-            "tz": "CDT",
+            "date": "2024-11-04",
+            "day": "04",
+            "epoch": "1730742376",
+            "epoch_int": "1730742376",
+            "hour": "11",
+            "iso8601": "2024-11-04T17:46:16Z",
+            "iso8601_basic": "20241104T114616938960",
+            "iso8601_basic_short": "20241104T114616",
+            "iso8601_micro": "2024-11-04T17:46:16.938960Z",
+            "minute": "46",
+            "month": "11",
+            "second": "16",
+            "time": "11:46:16",
+            "tz": "CST",
             "tz_dst": "CDT",
-            "tz_offset": "-0500",
-            "weekday": "Tuesday",
-            "weekday_number": "2",
-            "weeknumber": "44",
+            "tz_offset": "-0600",
+            "weekday": "Monday",
+            "weekday_number": "1",
+            "weeknumber": "45",
             "year": "2024"
         },
         "ansible_default_ipv4": {
@@ -60,7 +60,7 @@
             "type": "ether"
         },
         "ansible_default_ipv6": {
-            "address": "2600:1700:8c13:280f:b085:e0e2:ea65:ca5a",
+            "address": "2600:1700:8c13:280f:2fca:b63f:79de:b939",
             "gateway": "fe80::72a7:41ff:fe66:e3b6",
             "interface": "eno1",
             "macaddress": "1c:69:7a:6c:7d:b8",
@@ -180,37 +180,37 @@
                     "scope": "link"
                 },
                 {
+                    "address": "2600:1700:8c13:280f:2fca:b63f:79de:b939",
+                    "prefix": "64",
+                    "scope": "global"
+                },
+                {
+                    "address": "2600:1700:8c13:280f:3a81:a9fc:5577:c6ad",
+                    "prefix": "64",
+                    "scope": "global"
+                },
+                {
+                    "address": "2600:1700:8c13:280f:b043:aaf5:1160:dd76",
+                    "prefix": "64",
+                    "scope": "global"
+                },
+                {
+                    "address": "2600:1700:8c13:280f:533a:912:ff3f:493f",
+                    "prefix": "64",
+                    "scope": "global"
+                },
+                {
+                    "address": "2600:1700:8c13:280f:3811:8418:b89f:9c16",
+                    "prefix": "64",
+                    "scope": "global"
+                },
+                {
+                    "address": "2600:1700:8c13:280f:f414:b7e0:b506:41b8",
+                    "prefix": "64",
+                    "scope": "global"
+                },
+                {
                     "address": "2600:1700:8c13:280f:b085:e0e2:ea65:ca5a",
-                    "prefix": "64",
-                    "scope": "global"
-                },
-                {
-                    "address": "2600:1700:8c13:280f:3537:d60b:a9c5:e11c",
-                    "prefix": "64",
-                    "scope": "global"
-                },
-                {
-                    "address": "2600:1700:8c13:280f:8f9:8191:e9a1:706",
-                    "prefix": "64",
-                    "scope": "global"
-                },
-                {
-                    "address": "2600:1700:8c13:280f:9cb6:c2d1:ebdb:a0ff",
-                    "prefix": "64",
-                    "scope": "global"
-                },
-                {
-                    "address": "2600:1700:8c13:280f:2f6f:dac0:2ef1:74af",
-                    "prefix": "64",
-                    "scope": "global"
-                },
-                {
-                    "address": "2600:1700:8c13:280f:301b:3fb9:dbea:b309",
-                    "prefix": "64",
-                    "scope": "global"
-                },
-                {
-                    "address": "2600:1700:8c13:280f:5849:f6a:8fd6:d1d7",
                     "prefix": "64",
                     "scope": "global"
                 }
@@ -235,14 +235,14 @@
             "PWD": "/home/lavender",
             "SHELL": "/bin/bash",
             "SHLVL": "0",
-            "SSH_CLIENT": "192.168.40.69 33424 22",
-            "SSH_CONNECTION": "192.168.40.69 33424 192.168.40.61 22",
+            "SSH_CLIENT": "192.168.40.69 48940 22",
+            "SSH_CONNECTION": "192.168.40.69 48940 192.168.40.61 22",
             "SSH_TTY": "/dev/pts/0",
             "TERM": "xterm-256color",
             "USER": "lavender",
             "XDG_RUNTIME_DIR": "/run/user/1000",
             "XDG_SESSION_CLASS": "user",
-            "XDG_SESSION_ID": "651",
+            "XDG_SESSION_ID": "930",
             "XDG_SESSION_TYPE": "tty",
             "_": "/bin/sh"
         },
@@ -347,6 +347,25 @@
             "type": "loopback"
         },
         "ansible_local": {},
+        "ansible_locally_reachable_ips": {
+            "ipv4": [
+                "127.0.0.0/8",
+                "127.0.0.1",
+                "192.168.40.61"
+            ],
+            "ipv6": [
+                "::1",
+                "2600:1700:8c13:280f:2fca:b63f:79de:b939",
+                "2600:1700:8c13:280f:3811:8418:b89f:9c16",
+                "2600:1700:8c13:280f:3a81:a9fc:5577:c6ad",
+                "2600:1700:8c13:280f:533a:912:ff3f:493f",
+                "2600:1700:8c13:280f:b043:aaf5:1160:dd76",
+                "2600:1700:8c13:280f:b085:e0e2:ea65:ca5a",
+                "2600:1700:8c13:280f:da02:6a68:9cd9:3d6d",
+                "2600:1700:8c13:280f:f414:b7e0:b506:41b8",
+                "fe80::5f23:5f7e:5865:7103"
+            ]
+        },
         "ansible_lsb": {
             "codename": "bookworm",
             "description": "Debian GNU/Linux 12 (bookworm)",

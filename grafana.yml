@@ -1,6 +1,0 @@
----
-- name: Deploy Loki using the default configuration
-  hosts: monitor2
-  become: true
-  roles:
-    - role: grafana

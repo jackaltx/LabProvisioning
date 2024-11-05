@@ -823,8 +823,8 @@
     "rpc-statd.service": {
         "name": "rpc-statd.service",
         "source": "systemd",
-        "state": "inactive",
-        "status": "static"
+        "state": "running",
+        "status": "enabled-runtime"
     },
     "rpc-svcgssd.service": {
         "name": "rpc-svcgssd.service",
@@ -1353,12 +1353,6 @@
         "state": "unknown",
         "status": "static"
     },
-    "user-runtime-dir@0.service": {
-        "name": "user-runtime-dir@0.service",
-        "source": "systemd",
-        "state": "stopped",
-        "status": "active"
-    },
     "user-runtime-dir@1000.service": {
         "name": "user-runtime-dir@1000.service",
         "source": "systemd",
@@ -1370,12 +1364,6 @@
         "source": "systemd",
         "state": "unknown",
         "status": "static"
-    },
-    "user@0.service": {
-        "name": "user@0.service",
-        "source": "systemd",
-        "state": "running",
-        "status": "active"
     },
     "user@1000.service": {
         "name": "user@1000.service",

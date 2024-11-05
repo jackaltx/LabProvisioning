@@ -14,7 +14,7 @@
   # Note: I must use the shell module for ssh-keyscan to work :(
 
   - name: "Add localhost Keys on {{ inventory_hostname }} ({{ ansible_host }}) "
-    ansible.builtin.shell: "ssh-keyscan -H localhost >> ~/.ssh/known_hosts"
+    ansible.builtin.shell: "ssh-keyscan -H localhost"
     connection: local
     register: shell_result
     # failed_when: shell_result.rc !=0
@@ -26,7 +26,7 @@
       verbosity: 1
 
   - name: "Add local ip Keys on {{ inventory_hostname }} ({{ ansible_host }}) "
-    ansible.builtin.shell: "ssh-keyscan -H {{ ansible_host }} >> ~/.ssh/known_hosts"
+    ansible.builtin.shell: "ssh-keyscan -H {{ ansible_host }}"
     connection: local
     register: shell_result
     # failed_when: shell_result.rc !=0
@@ -38,7 +38,7 @@
       verbosity: 1
 
 - hosts: 
-    - clients
+    - mylab
   tasks:
 
   - name: Add inventory Host Keys for  workers and helpers"

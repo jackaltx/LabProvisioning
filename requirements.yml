@@ -6,3 +6,4 @@
 collections:
   - name: grafana.grafana
     version: 1.0.0
+  - name: ansible.posix

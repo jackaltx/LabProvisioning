@@ -1,9 +1,13 @@
 ---
 all:
 
-  children:
+  children: 
+
     # ................................................
     mylab:
+
+      #..........................................
+      # mylab hosts
       hosts:
 
         ryan9:
@@ -24,14 +28,32 @@ all:
         monitor2:
           ansible_host: 192.168.40.107
 
+      #..........................................
+      # mylab vars
       vars: 
         telegraf_outputs: []
-
+ 
       children:
         #......................................
         provisioner:
           hosts:
             ryan9:
+              mount_nfs_share: true
+              cluster_nfs_mounts:
+                migration:
+                  src: 192.168.40.14:/lavnet-migration-2024
+                  path: /mnt/migration
+                  opts: rw,noatime,bg,rsize=131072,wsize=131072,hard,timeo=150,retrans=3
+                  state: mounted
+                  fstype: nfs4
+                gitea:
+                  src: 192.168.40.14:/gitea-share/ryan9
+                  path: /var/lib/gitea
+                  opts: rw,noatime,bg,rsize=131072,wsize=131072,hard,timeo=150,retrans=3
+                  state: mounted
+                  fstype: nfs4
+
+          
         #......................................
         metric_collectors:
           hosts:
@@ -44,6 +66,14 @@ all:
               influxdb_cert: "/etc/ssl/certs/x509.cer"
               influxdb_key: "/etc/ssl/private/x509.key"
               telegraf_outputs: [localhost]
+              mount_nfs_share: true
+              cluster_nfs_mounts:
+                influx_share:
+                  src: 192.168.40.14:/influx-share/monitor1
+                  path: /var/lib/influxdb
+                  opts: rw,noatime,bg,rsize=131072,wsize=131072,hard,timeo=150,retrans=3
+                  state: mounted
+                  fstype: nfs4
 
 
             monitor2:
@@ -52,6 +82,15 @@ all:
               influxdb_cert: ""
               influxdb_key: ""
               telegraf_outputs: [localhost,monitor1]
+              mount_nfs_share: true
+              cluster_nfs_mounts:
+                influx_share:
+                  src: 192.168.40.14:/influx-share/monitor2
+                  path: /var/lib/influxdb
+                  opts: rw,noatime,bg,rsize=131072,wsize=131072,hard,timeo=150,retrans=3
+                  state: mounted
+                  fstype: nfs4
+
 
 
           #.........................................

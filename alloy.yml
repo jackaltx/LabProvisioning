@@ -1,5 +1,5 @@
 ---
 - name: "Service: alloy"
-  hosts: collectors
+  hosts: metric_collectors
   roles:
     - alloy

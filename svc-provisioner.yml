@@ -1,0 +1,10 @@
+---
+- name: "Configure Monitor2"
+  hosts: provisioner
+  
+  vars:
+    loki_force_reload: false
+
+  roles:
+    
+    - nfs-client
