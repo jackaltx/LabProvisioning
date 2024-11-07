@@ -13,7 +13,7 @@ telgraf2influxdb_configs:
     insecure_skip_verify: false
   monitor0:
     output: false
-    url: "http://monitor0.a0a0.org"
+    url: "http://monitor0.{{ domain }}"
     token: !vault |
           $ANSIBLE_VAULT;1.1;AES256
           33633038343865653635613865366138356231393234623637653061626363383233396338343630
@@ -34,7 +34,7 @@ telgraf2influxdb_configs:
     insecure_skip_verify: false
   monitor1:
     output: false
-    url: "http://monitor1.a0a0.org"
+    url: "http://monitor1.{{ domain }}"
     token: !vault |
           $ANSIBLE_VAULT;1.1;AES256
           65356130376661343835316131313933343433613864326630356433363437656666303439383034
@@ -55,7 +55,7 @@ telgraf2influxdb_configs:
     insecure_skip_verify: false
   monitor1-telegraf:
     output: false
-    url: "http://monitor1.a0a0.org"
+    url: "http://monitor1.{{ domain }}"
     token: !vault |
           $ANSIBLE_VAULT;1.1;AES256
           65356130376661343835316131313933343433613864326630356433363437656666303439383034

@@ -1,6 +1,9 @@
 ---
 all:
 
+  vars: 
+    domain: a0a0.org
+
   children: 
 
     # ................................................
@@ -14,13 +17,13 @@ all:
           ansible_host: localhost
           ansible_connection: local
         dennuc:
-          ansible_host: dennuc.a0a0.org
+          ansible_host: "dennuc.{{domain}}"
         nuc11:
-          ansible_host: nuc11.a0a0.org
+          ansible_host: "nuc11.{{domain}}"
         monitor0:
-          ansible_host: monitor0.a0a0.org
+          ansible_host: "monitor0.{{domain}}"
         monitor1:
-          ansible_host: monitor1.a0a0.org
+          ansible_host: "monitor1.{{domain}}"
         # fed40-1:
         #   ansible_host: 192.168.40.101
         # ubuntu24:
