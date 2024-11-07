@@ -13,7 +13,7 @@ all:
       # mylab hosts
       hosts:
 
-        ryan9:
+        serenity:
           ansible_host: localhost
           ansible_connection: local
         dennuc:
