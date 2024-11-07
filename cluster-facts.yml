@@ -1,5 +1,5 @@
 ---
-- hosts: clients
+- hosts: mylab
   gather_facts: no
   serial: 8
   tasks:
