@@ -3,13 +3,14 @@
   hosts: monitor2
   
   vars:
-    influx_force_reload: false
-    influx_force_configure: false
-    loki_force_reload: false
+    influxdb_reload: true
+    influxdb_configure: true
+    loki_force_reload: true
 
   roles:
     
     - influxdb
-    - telegraf
     - loki
+
+    - telegraf
     - alloy

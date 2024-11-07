@@ -3,8 +3,8 @@
   hosts: metric_collectors
   
   vars:
-    influx_operators_token: ""
-    influx_force_reload: false
+    influxdb_operators_token: ""
+    influxdb_reload: false
     loki_force_reload: false
 
   roles:

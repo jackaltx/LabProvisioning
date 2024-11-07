@@ -41,9 +41,9 @@ ansible-inventory -i inventory --list
     "_meta": {
         "hostvars": {
             "localhost": {
-                "influx_level": "error",
-                "telegraf_influx_token": "br549==",
-                "telegraf_influx_url": "monitor.mydomain.com"
+                "influxdb_level": "error",
+                "telegraf_influxdb_token": "br549==",
+                "telegraf_influxdb_url": "monitor.mydomain.com"
             }
         }
     },

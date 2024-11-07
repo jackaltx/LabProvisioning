@@ -8,6 +8,3 @@
 
     - ansible.builtin.debug:
         var: cluster_nfs_mounts
-
-    - ansible.builtin.debug:
-        var: influx_data_path

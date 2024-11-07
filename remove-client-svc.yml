@@ -1,7 +1,7 @@
 ---
 
 - name: Total Removal
-  hosts: monitor2
+  hosts: clients
 
   vars:
     influxdb_state: absent
@@ -9,9 +9,9 @@
     influxdb_delete_data: true
 
     telegraf_state: absent
-    telegraf_delete_config: true
-    telegraf_delete_data: true
-
+    influxdb_delete_config: true
+    influxdb_delete_data: true
+    
     alloy_state: absent
     alloy_delete_config: true
     alloy_delete_data: true
@@ -24,9 +24,5 @@
 
     # clients
     - telegraf
-    - alloy
-    
-    # services
-    - influxdb
-    - loki
+    #- alloy
 

@@ -19,7 +19,7 @@
       verbosity: 1
  
   - set_fact:
-      influx_auth_list: "{{ influx_auth_list| default([]) + [{
+      influxdb_auth_list: "{{ influxdb_auth_list| default([]) + [{
         'id': item.id,
         'token': item.token,
         'description': item.description
@@ -27,13 +27,13 @@
     loop: "{{ full_list }}"
 
   - debug:
-      var: influx_auth_list
+      var: influxdb_auth_list
       verbosity: 1
 
   - name: Create token file for this host
     local_action: 
       module: ansible.builtin.copy
-      content: "{{ influx_auth_list  | to_nice_yaml  }}"
+      content: "{{ influxdb_auth_list  | to_nice_yaml  }}"
       dest: "{{ lookup('env', 'PWD') }}/data/influx-all-tokens-{{ ansible_hostname }}.yml"
       owner: "{{ lookup('env', 'USER') }}"
       mode: 0600

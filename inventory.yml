@@ -58,35 +58,87 @@ all:
         metric_collectors:
           hosts:
             # monitor0:
-            #   influx_data_path: /mnt/measurements/influxdb
-            #   influx_defaults: etc-default-telegraf-linode
+            #   influxdb_data_path: /mnt/measurements/influxdb
+            #   influxdb_defaults: etc-default-telegraf-linode
             monitor1:
-              influx_data_path: /var/lib/influxdb
-              influx_defaults: etc-default-telegraf-local
+              influxdb_data_path: "/opt/influxdb"
+              influxdb_defaults: etc-default-telegraf-local
               influxdb_cert: "/etc/ssl/certs/x509.cer"
               influxdb_key: "/etc/ssl/private/x509.key"
               telegraf_outputs: [localhost]
+
+              loki_endpoint: !vault |
+                $ANSIBLE_VAULT;1.1;AES256
+                64353965643662653137623230383738326332656232656164333763336135353465323664626361
+                6231623663353534383763356265343335313863366537650a343837303938616235386534613630
+                62336365306563393032326639306639346661316661396461343737636532623464383931633536
+                6137643138353632340a333662336535663463356564353661316264313963393664623333613365
+                35636632303837323933396331323335633934616466613231373565356236326130
+              loki_s3_bucket: 'monitor1'
+              loki_key_id: !vault |
+                $ANSIBLE_VAULT;1.1;AES256
+                38323363323566313262346366623038343237623533653439366338666661383235616463323139
+                6232623765383134626234373064333436376639343162350a643733386536363565303333343732
+                66393134343636306530366336373764313364323034376634666236646565313134373731653561
+                3735663733303539390a653763373139353331366565306364326561343833656464646234316537
+                61323665393633363439633233333132643062363163653066383964396665633335616462316638
+                3039316364653662613337663963393064383061653462353332
+              loki_access_key: !vault |
+                $ANSIBLE_VAULT;1.1;AES256
+                37316133383531366562353235326633336335663938353236356265303663646139626334373131
+                3063303931663839353963393238393135363439396530620a633962633435353431613538613432
+                66333239333332383631613136353637363030336639363232323665303964366661623035376639
+                3035303466303761320a373238333463303763376639653530656330303961396462633533383666
+                62303761356164396432653263343532613731636339363766366533633935616563303139636463
+                3835653665306530303132633136356330666634346261616630
+
               mount_nfs_share: true
               cluster_nfs_mounts:
-                influx_share:
-                  src: 192.168.40.14:/influx-share/monitor1
-                  path: /var/lib/influxdb
+                influxdb_share:
+                  src: 192.168.40.14:/influx-share/{{ ansible_hostname }}
+                  path: "{{ influxdb_data_path }}"
                   opts: rw,noatime,bg,rsize=131072,wsize=131072,hard,timeo=150,retrans=3
                   state: mounted
                   fstype: nfs4
 
 
             monitor2:
-              influx_data_path: /var/lib/influxdb
-              influx_defaults: etc-default-telegraf-local
+              influxdb_data_path: "/opt/influxdb"
+              influxdb_defaults: etc-default-telegraf-local
               influxdb_cert: ""
               influxdb_key: ""
-              telegraf_outputs: [localhost,monitor1]
+              telegraf_outputs: [localhost,monitor1-telegraf]
+
+              loki_endpoint: !vault |
+                $ANSIBLE_VAULT;1.1;AES256
+                61623966663361383133343861633537326464653635303837336234646630333435376434386136
+                3233303937633365363037613134316665656261346135390a633339313361386536656163303833
+                64626431343639336535666561396331343666643933396666303062373835303731656362643963
+                3731633331383565390a633833656563316637303335666438383264393234666637613838663738
+                31393739366362346662303831376432313365323236303966613765313165636361
+              loki_s3_bucket: 'monitor2'
+              loki_key_id: !vault |
+                $ANSIBLE_VAULT;1.1;AES256
+                35663865316335666232336135636133333033656664616339316564623265353632663663653237
+                6165316536313565363234653237383637663338316661620a623039653539303535316363356538
+                65356636656632633861623630333339643931303436383437383463626563373536643366613637
+                3736656463383834620a353263336561633063356633353835393633343732356339616666323335
+                36393536376639356532636430303966313534613434343961633438616239306562666562373837
+                3330653365643334653234653361303565366136343865373663
+              loki_access_key: !vault |
+                $ANSIBLE_VAULT;1.1;AES256
+                35353532393331643337663235326263363361393839386531666132333962373666316339383735
+                6333626364623534663966663231373335396161653937370a393363663435323534643739306234
+                66643631313465343333656235663637663664666433666663623266623334336535336336633730
+                3230316531373436360a313437313534356131306136303335303539316535626130343339356532
+                62643837653664626535663962656364313137633130373236376339383638636635383235646561
+                3362346431313638616662353236383436373562353165636437
+
               mount_nfs_share: true
               cluster_nfs_mounts:
-                influx_share:
+                influxdb_share:
                   src: 192.168.40.14:/influx-share/monitor2
-                  path: /var/lib/influxdb
+                  path: "{{ influxdb_data_path }}"
                   opts: rw,noatime,bg,rsize=131072,wsize=131072,hard,timeo=150,retrans=3
                   state: mounted
                   fstype: nfs4
@@ -96,7 +148,7 @@ all:
           #.........................................
           # metric_collectors only vars
           vars: 
-            influx_level: error
+            influxdb_level: error
 
         #......................................
         # used to install common packages
@@ -114,7 +166,8 @@ all:
           # only promtail for now.  moving to alloy soon
           vars:
 
-            telegraf_outputs: [monitor0,monitor1]
+            #telegraf_outputs: [monitor0,monitor1-telegraf]
+            telegraf_outputs: [monitor0]
 
         
 
