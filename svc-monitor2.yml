@@ -5,7 +5,7 @@
   vars:
     influxdb_reload: true
     influxdb_configure: true
-    loki_force_reload: true
+    loki_force_reload: false
 
   roles:
     

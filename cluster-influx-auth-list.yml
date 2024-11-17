@@ -5,12 +5,14 @@
   tasks:
 
   - name: get the auth list from a cmd, register output
+    no_log: "{{ mylab_nolog | default(true) }}"
     ansible.builtin.command: '/usr/bin/influx auth list --json'
     become: true
     register: cmd_result
     failed_when: cmd_result.rc != 0
 
   - name: converting json to list of dictionaries
+    no_log: "{{ mylab_nolog | default(true) }}"
     set_fact:
       full_list: "{{ cmd_result.stdout| from_json }}"
 

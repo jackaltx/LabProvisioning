@@ -3,6 +3,7 @@ all:
 
   vars: 
     domain: a0a0.org
+    mylab_nolog : "{{ cluster_secure_log | bool | default(true) }}"
 
   children: 
 
@@ -13,7 +14,7 @@ all:
       # mylab hosts
       hosts:
 
-        serenity:
+        firefly:
           ansible_host: localhost
           ansible_connection: local
         dennuc:
@@ -33,9 +34,9 @@ all:
 
       #..........................................
       # mylab vars
-      vars: 
+      vars:
         telegraf_outputs: []
- 
+
       children:
         #......................................
         provisioner:
@@ -56,7 +57,7 @@ all:
                   state: mounted
                   fstype: nfs4
 
-          
+
         #......................................
         metric_collectors:
           hosts:
@@ -72,13 +73,26 @@ all:
 
               loki_endpoint: jacknas2.a0a0.org:8010
               loki_s3_bucket: 'prod'
-              loki_key_id: LokiStore:TWFAE11EK0hpA4kAYPLE
-              loki_access_key: 1RPOLdE7YXfQ6HXrJvZPHdZLhxt9Iats
+              loki_key_id: !vault |
+                $ANSIBLE_VAULT;1.1;AES256
+                38643963393165343034386333343339633733653430353639643130396364373339366131353133
+                3966383938306636343133363630623061626662393235370a383134633965373663656138383035
+                39313336396562333438366465306438643630626639313165643461336532393263623936666363
+                3533636664373039310a316633383132306534313465333065643436383835616462373161333236
+                63663466646161646335323332663236333861656166313762356239636264356262
+              loki_access_key: !vault |
+                $ANSIBLE_VAULT;1.1;AES256
+                39343636326662656330346263356561333836666664663263313239396330626664326666643066
+                6566376630613937646536623163636365346664353262340a316262303931653730613131393861
+                36343938333635333234316237373965356233643737646134633866346333633135353432623534
+                6362326465323332310a653036303863353938636436343563356262623630343064656337396339
+                39656531393761623733643661303931313332326361373533383838383030386163616234383765
+                3531323261653531646438323137316336616435333134326638
 
               mount_nfs_share: true
               cluster_nfs_mounts:
                 influxdb_share:
-                  src: 192.168.40.14:/influx-share/{{ ansible_hostname }}
+                  src: jacknas2.a0a0.org:/influx-share/{{ ansible_hostname }}
                   path: "{{ influxdb_data_path }}"
                   opts: rw,noatime,bg,rsize=131072,wsize=131072,hard,timeo=150,retrans=3
                   state: mounted
@@ -120,7 +134,7 @@ all:
               mount_nfs_share: true
               cluster_nfs_mounts:
                 influxdb_share:
-                  src: 192.168.40.14:/influx-share/monitor2
+                  src: jacknas2.a0a0.org:/influx-share/monitor2
                   path: "{{ influxdb_data_path }}"
                   opts: rw,noatime,bg,rsize=131072,wsize=131072,hard,timeo=150,retrans=3
                   state: mounted
@@ -140,7 +154,7 @@ all:
         # used to install common packages
         clients:
           hosts:
-            ryan9:
+            firefly:
             dennuc:
             nuc11:
             #monitor0:
@@ -155,5 +169,4 @@ all:
             #telegraf_outputs: [monitor0,monitor1-telegraf]
             telegraf_outputs: [monitor1_telegraf]
 
-        
 
