@@ -42,7 +42,7 @@
   tasks:
 
   - name: Add inventory Host Keys for  workers and helpers"
-    tags: keyscan
+    when: mylab_non_ssh is false
     local_action: "shell ssh-keyscan -H {{ ansible_host }} >> ~/.ssh/known_hosts"
     connection: local
     # ignore_errors: yes

@@ -1,0 +1,43 @@
+---
+- hosts: nuc11
+  vars:
+    container_name: PiHole
+
+  tasks:
+    - name: Get Container VMID from Proxmox Host
+      become: true
+      shell: "pvesh get /nodes/{{ ansible_hostname }}/lxc --output-format=json | jq -r '.[] | select(.name == \"{{ container_name }}\") | .vmid'"
+      register: container_vmid
+      changed_when: false
+
+    - name: Verify Container VMID
+      fail:
+        msg: "Container {{ container_name }} not found"
+      when: container_vmid.stdout | length == 0
+
+    - name: Get Container Status
+      become: true
+      command: "pct status {{ container_vmid.stdout }}"
+      register: container_status
+      changed_when: false
+
+    - name: Start Container if Not Running
+      command: "pct start {{ container_vmid.stdout }}"
+      when: "'stopped' in container_status.stdout"
+
+    - name: Wait for Container to be Ready
+      pause:
+        seconds: 10
+
+    - name: Run Commands Inside Container
+      become: true
+      shell: "pct exec {{ container_vmid.stdout }} -- {{ item }}"
+      loop:
+        - "hostname"
+        - "cat /etc/os-release"
+        - "ip addr"
+      register: container_commands
+
+    - name: Display Command Outputs
+      debug:
+        var: container_commands.results

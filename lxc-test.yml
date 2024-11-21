@@ -1,0 +1,34 @@
+- hosts: PiHole
+  gather_facts: false
+  become: true
+  vars:
+    ansible_remote_tmp: /tmp/jack-ansible
+
+  pre_tasks:
+    - name: Detect Python interpreter
+      raw: which python3
+      register: python3_path
+    - set_fact:
+        ansible_python_interpreter: "{{ python3_path.stdout.strip() }}"
+
+  tasks:
+
+  # - name: "Required Packages"
+  #   become: true
+  #   ansible.builtin.apt:
+  #     update_cache: true
+  #     pkg:
+  #       - python3-proxmoxer
+
+  - name: Run command in container
+    #become: true
+    command:
+      cmd: whoami
+    register: command_output
+
+  - debug: msg="{{ command_output }}"
+
+  # - name: Verify output
+  #   fail:
+  #     msg: "Not the expected ({{ expect_user }}) output ({{ command_output.stdout }})!"
+  #   when: command_output.stdout != expect_user

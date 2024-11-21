@@ -1,53 +1,61 @@
 ---
-- hosts: mylab
+- hosts:
+    #- clients
+    #- metric_collectors
+    - mylab
   gather_facts: no
   serial: 8
   tasks:
 
   - name: Create facts folder in current directory
+    run_once: true
+    ignore_unreachable: true
     local_action: 
         module: ansible.builtin.file
         path: "{{ lookup('env', 'PWD') }}/facts"
         state: directory
-        #owner: "{{ hostvars['ryan9'].local_user  }}"
-        #group: "{{ hostvars['ryan9'].local_group }}"
         owner: "{{ lookup('env', 'USER') }}"
         mode: 0750
 
-  - name: Collect only facts returned by facter
-    ansible.builtin.setup:
-      gather_subset:
-        - '!all'
-        - system
-        - architecture
-        - all_ipv4_addresses
-        - all_ipv6_addresses
-        - facter
-    register: facts_result
+  - name: collect facts and write to local file
+    when: mylab_non_ssh == false
+    block:
+
+    - name: Collect only facts returned by facter
+      ignore_unreachable: true
+      ansible.builtin.setup:
+        gather_subset:
+          - '!all'
+          - system
+          - architecture
+          - all_ipv4_addresses
+          - all_ipv6_addresses
+          - facter
+      register: facts_result
     
-  - name: Remove the previous fact files
-    local_action: 
-        module: file
-        path: "{{ lookup('env', 'PWD') }}/facts/{{ facts_result }}"
-        state: absent
+    - name: Remove the previous fact files
+      local_action: 
+          module: file
+          path: "{{ lookup('env', 'PWD') }}/facts/{{ facts_result }}"
+          state: absent
 
-  - name: Create current facts files
-    local_action: 
-      module: ansible.builtin.copy
-      content: "{{ facts_result | to_nice_json }}"
-      dest: "{{ lookup('env', 'PWD') }}/facts/{{ inventory_hostname }}.json"
-      #owner: "{{ hostvars['ryan9'].local_user  }}"
-      #group: "{{ hostvars['ryan9'].local_group }}"
-      owner: "{{ lookup('env', 'USER') }}"
-      mode: 0664
+    - name: Create current facts files
+      ignore_unreachable: true
+      local_action: 
+        module: ansible.builtin.copy
+        content: "{{ facts_result | to_nice_json }}"
+        dest: "{{ lookup('env', 'PWD') }}/facts/{{ inventory_hostname }}.json"
+        owner: "{{ lookup('env', 'USER') }}"
+        mode: 0664
 
-  - name: Populate service facts
-    ansible.builtin.service_facts:
+    - name: Populate service facts
+      ansible.builtin.service_facts:
 
-  - name: Create current systemd facts files
-    local_action: 
-      module: ansible.builtin.copy
-      content: "{{ ansible_facts.services | to_nice_json }}"
-      dest: "{{ lookup('env', 'PWD') }}/facts/{{ inventory_hostname }}-systemd.json"
-      owner: "{{ lookup('env', 'USER') }}"
-      mode: 0664
+    - name: Create current systemd facts files
+      ignore_unreachable: true
+      local_action: 
+        module: ansible.builtin.copy
+        content: "{{ ansible_facts.services | to_nice_json }}"
+        dest: "{{ lookup('env', 'PWD') }}/facts/{{ inventory_hostname }}-systemd.json"
+        owner: "{{ lookup('env', 'USER') }}"
+        mode: 0664

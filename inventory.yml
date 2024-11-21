@@ -4,6 +4,11 @@ all:
   vars: 
     domain: a0a0.org
     mylab_nolog : "{{ cluster_secure_log | bool | default(true) }}"
+    ansible_user: lavender
+    ansible_ssh_private_key_file: ~/.ssh/id_ed25519
+
+    # basically non-ssh stuff, like LXC containers
+    mylab_non_ssh: false
 
   children: 
 
@@ -21,16 +26,16 @@ all:
           ansible_host: "dennuc.{{domain}}"
         nuc11:
           ansible_host: "nuc11.{{domain}}"
-        monitor0:
-          ansible_host: "monitor0.{{domain}}"
+        # monitor0:
+        #   ansible_host: "monitor0.{{domain}}"
         monitor1:
           ansible_host: "monitor1.{{domain}}"
         # fed40-1:
         #   ansible_host: 192.168.40.101
         # ubuntu24:
         #   ansible_host: 192.168.40.117
-        monitor2:
-          ansible_host: 192.168.40.107
+        # monitor2:
+        #   ansible_host: 192.168.40.107
 
       #..........................................
       # mylab vars
@@ -38,10 +43,22 @@ all:
         telegraf_outputs: []
 
       children:
+
+        #......................................
+        lxc_containers:
+          hosts:
+            PiHole:
+              ansible_host: 'nuc11.a0a0.org'
+              ansible_python_interprete: /usr/bin/python3
+              ansible_connection: pct_ssh
+              ansible_user: lavender
+              pct_host: 102
+          vars:
+              mylab_non_ssh: true
         #......................................
         provisioner:
           hosts:
-            serenity:
+            firefly:
               mount_nfs_share: true
               cluster_nfs_mounts:
                 migration:
@@ -99,46 +116,46 @@ all:
                   fstype: nfs4
 
 
-            monitor2:
-              influxdb_data_path: "/opt/influxdb"
-              influxdb_defaults: etc-default-telegraf-local
-              influxdb_cert: ""
-              influxdb_key: ""
-              telegraf_outputs: [localhost,monitor1_telegraf]
+            # monitor2:
+            #   influxdb_data_path: "/opt/influxdb"
+            #   influxdb_defaults: etc-default-telegraf-local
+            #   influxdb_cert: ""
+            #   influxdb_key: ""
+            #   telegraf_outputs: [localhost,monitor1_telegraf]
 
-              loki_endpoint: !vault |
-                $ANSIBLE_VAULT;1.1;AES256
-                61623966663361383133343861633537326464653635303837336234646630333435376434386136
-                3233303937633365363037613134316665656261346135390a633339313361386536656163303833
-                64626431343639336535666561396331343666643933396666303062373835303731656362643963
-                3731633331383565390a633833656563316637303335666438383264393234666637613838663738
-                31393739366362346662303831376432313365323236303966613765313165636361
-              loki_s3_bucket: 'monitor2'
-              loki_key_id: !vault |
-                $ANSIBLE_VAULT;1.1;AES256
-                35663865316335666232336135636133333033656664616339316564623265353632663663653237
-                6165316536313565363234653237383637663338316661620a623039653539303535316363356538
-                65356636656632633861623630333339643931303436383437383463626563373536643366613637
-                3736656463383834620a353263336561633063356633353835393633343732356339616666323335
-                36393536376639356532636430303966313534613434343961633438616239306562666562373837
-                3330653365643334653234653361303565366136343865373663
-              loki_access_key: !vault |
-                $ANSIBLE_VAULT;1.1;AES256
-                35353532393331643337663235326263363361393839386531666132333962373666316339383735
-                6333626364623534663966663231373335396161653937370a393363663435323534643739306234
-                66643631313465343333656235663637663664666433666663623266623334336535336336633730
-                3230316531373436360a313437313534356131306136303335303539316535626130343339356532
-                62643837653664626535663962656364313137633130373236376339383638636635383235646561
-                3362346431313638616662353236383436373562353165636437
+            #   loki_endpoint: !vault |
+            #     $ANSIBLE_VAULT;1.1;AES256
+            #     61623966663361383133343861633537326464653635303837336234646630333435376434386136
+            #     3233303937633365363037613134316665656261346135390a633339313361386536656163303833
+            #     64626431343639336535666561396331343666643933396666303062373835303731656362643963
+            #     3731633331383565390a633833656563316637303335666438383264393234666637613838663738
+            #     31393739366362346662303831376432313365323236303966613765313165636361
+            #   loki_s3_bucket: 'monitor2'
+            #   loki_key_id: !vault |
+            #     $ANSIBLE_VAULT;1.1;AES256
+            #     35663865316335666232336135636133333033656664616339316564623265353632663663653237
+            #     6165316536313565363234653237383637663338316661620a623039653539303535316363356538
+            #     65356636656632633861623630333339643931303436383437383463626563373536643366613637
+            #     3736656463383834620a353263336561633063356633353835393633343732356339616666323335
+            #     36393536376639356532636430303966313534613434343961633438616239306562666562373837
+            #     3330653365643334653234653361303565366136343865373663
+            #   loki_access_key: !vault |
+            #     $ANSIBLE_VAULT;1.1;AES256
+            #     35353532393331643337663235326263363361393839386531666132333962373666316339383735
+            #     6333626364623534663966663231373335396161653937370a393363663435323534643739306234
+            #     66643631313465343333656235663637663664666433666663623266623334336535336336633730
+            #     3230316531373436360a313437313534356131306136303335303539316535626130343339356532
+            #     62643837653664626535663962656364313137633130373236376339383638636635383235646561
+            #     3362346431313638616662353236383436373562353165636437
 
-              mount_nfs_share: true
-              cluster_nfs_mounts:
-                influxdb_share:
-                  src: jacknas2.a0a0.org:/influx-share/monitor2
-                  path: "{{ influxdb_data_path }}"
-                  opts: rw,noatime,bg,rsize=131072,wsize=131072,hard,timeo=150,retrans=3
-                  state: mounted
-                  fstype: nfs4
+            #   mount_nfs_share: true
+            #   cluster_nfs_mounts:
+            #     influxdb_share:
+            #       src: jacknas2.a0a0.org:/influx-share/monitor2
+            #       path: "{{ influxdb_data_path }}"
+            #       opts: rw,noatime,bg,rsize=131072,wsize=131072,hard,timeo=150,retrans=3
+            #       state: mounted
+            #       fstype: nfs4
 
 
 
@@ -168,5 +185,9 @@ all:
 
             #telegraf_outputs: [monitor0,monitor1-telegraf]
             telegraf_outputs: [monitor1_telegraf]
+
+            alloy_loki_endpoint: monitor.a0a0.org
+            alloy_config: "/etc/alloy/homee.alloy"
+
 
 
