@@ -1,0 +1,9 @@
+---
+- name: "Service: mariadb"
+  hosts: mariadb_servers
+  become: true
+  vars:
+    mariadb_state: absent
+    mariadb_remove_data: true
+  roles:
+    - mariadb

@@ -30,8 +30,8 @@ all:
         #   ansible_host: "monitor0.{{domain}}"
         monitor1:
           ansible_host: "monitor1.{{domain}}"
-        # fed40-1:
-        #   ansible_host: 192.168.40.101
+        mailsvc0:
+          ansible_host: 192.168.40.101
         # ubuntu24:
         #   ansible_host: 192.168.40.117
         # monitor2:
@@ -45,11 +45,16 @@ all:
       children:
 
         #......................................
+        mariadb_servers:
+          hosts:
+            mailsvc0:
+            
+        #......................................
         lxc_containers:
           hosts:
             PiHole:
               ansible_host: 'nuc11.a0a0.org'
-              ansible_python_interprete: /usr/bin/python3
+              ansible_python_interpreter: /usr/bin/python3
               ansible_connection: pct_ssh
               ansible_user: lavender
               pct_host: 102
@@ -80,10 +85,8 @@ all:
           hosts:
             # monitor0:
             #   influxdb_data_path: /mnt/measurements/influxdb
-            #   influxdb_defaults: etc-default-telegraf-linode
             monitor1:
               influxdb_data_path: "/opt/influxdb"
-              influxdb_defaults: etc-default-telegraf-local
               influxdb_cert: "/etc/ssl/certs/x509.cer"
               influxdb_key: "/etc/ssl/private/x509.key"
               telegraf_outputs: [localhost]
@@ -118,7 +121,6 @@ all:
 
             # monitor2:
             #   influxdb_data_path: "/opt/influxdb"
-            #   influxdb_defaults: etc-default-telegraf-local
             #   influxdb_cert: ""
             #   influxdb_key: ""
             #   telegraf_outputs: [localhost,monitor1_telegraf]

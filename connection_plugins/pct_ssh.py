@@ -267,54 +267,8 @@ class Connection(ConnectionBase):
 
 
     #######################################################################
-    # def put_file(self, in_path, out_path):
-    #     """Copy file to container through Proxmox host using SSH and Cat"""
-    #     super(Connection, self).put_file(in_path, out_path)
-    #     if not os.path.exists(to_bytes(in_path, errors="surrogate_or_strict")):
-    #         raise AnsibleFileNotFound(f"file or module does not exist: {to_native(in_path)}")
-
-    #     with open(in_path, "rb") as in_f:
-    #         in_data = in_f.read()
-
-    #     become_pass = self._play_context.become_pass
-    #     cmd = f"cat > {shlex.quote(out_path)}"
-    #     pct_cmd = f'echo {become_pass} | sudo -n -S pct exec {self.container_name} -- /bin/sh -c {shlex.quote(cmd)}'
-    #     ssh_cmd = self._build_command('ssh',pct_cmd) 
-
-
-    #     display.vvv(f"PUT {in_path} TO {out_path}", host=self.host)
-    #     display.vvv(f"cmd {cmd}", host=self.host)        
-    #     display.vvv(f"pct_cmd {pct_cmd}", host=self.host)
-    #     display.vvv(f"ssh_cmd {ssh_cmd}", host=self.host)
-
-    #     try:
-    #         p = subprocess.Popen(
-    #             ssh_cmd,
-    #             stdin=subprocess.PIPE,
-    #             stdout=subprocess.PIPE,
-    #             stderr=subprocess.PIPE,
-    #             universal_newlines=True
-    #         )
-    #         stdout, stderr = p.communicate(input=in_data.decode())
-    #         display.vvv(f"SSH_STDOUT: {stdout}", host=self.host)
-    #         display.vvv(f"SSH_STDERR: {stderr}", host=self.host)
-    #     except subprocess.CalledProcessError as e:
-    #         raise AnsibleError(f"Failed to copy {in_path} to {out_path}: {stderr.strip()}")
-    #     except Exception as e:
-    #         raise AnsibleError(f"Failed to copy {in_path} to {out_path}: {str(e)}")
-
-    #     if p.returncode != 0:
-    #         raise AnsibleError(f"Failed to copy {in_path} to {out_path}: {stderr.strip()}")
-
-    #     display.vvv(f"File {out_path} successfully uploaded", host=self.host)
-
-
-
-
-
-
     def put_file(self, in_path, out_path):
-        """Copy file to container through Proxmox host using pct exec and Here-Document"""
+        """Copy file to container through Proxmox host using SSH and Cat"""
         super(Connection, self).put_file(in_path, out_path)
         if not os.path.exists(to_bytes(in_path, errors="surrogate_or_strict")):
             raise AnsibleFileNotFound(f"file or module does not exist: {to_native(in_path)}")
@@ -323,31 +277,77 @@ class Connection(ConnectionBase):
             in_data = in_f.read()
 
         become_pass = self._play_context.become_pass
-        pct_exec_cmd = [
-            'ssh', self.host,
-            'echo', become_pass, '|', 'sudo', '-S',
-            'pct', 'exec', str(self.container_name), '--',
-            '/bin/sh', '-c', f"cat {in_data} >  {shlex.quote(out_path)}"
-        ]
+        cmd = f"cat > {shlex.quote(out_path)}"
+        pct_cmd = f'echo {become_pass} | sudo -S pct enter {self.container_name} -- /bin/sh -c {shlex.quote(cmd)}'
+        ssh_cmd = self._build_command('ssh',pct_cmd) 
+
 
         display.vvv(f"PUT {in_path} TO {out_path}", host=self.host)
-        display.vvv(f"pct_exec_cmd {pct_exec_cmd}", host=self.host)
+        display.vvv(f"cmd {cmd}", host=self.host)        
+        display.vvv(f"pct_cmd {pct_cmd}", host=self.host)
+        display.vvv(f"ssh_cmd {ssh_cmd}", host=self.host)
 
         try:
-            subprocess.check_call(
-                pct_exec_cmd,
+            p = subprocess.Popen(
+                ssh_cmd,
                 stdin=subprocess.PIPE,
-                stderr=subprocess.STDOUT,
-                universal_newlines=False
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                universal_newlines=True
             )
-            display.vvv(f"File {out_path} successfully uploaded", host=self.host)
+            stdout, stderr = p.communicate(input=in_data.decode())
+            display.vvv(f"SSH_STDOUT: {stdout}", host=self.host)
+            display.vvv(f"SSH_STDERR: {stderr}", host=self.host)
         except subprocess.CalledProcessError as e:
-            if 'sudo: a password is required' in e.output.decode():
-                raise AnsibleError(f"Failed to copy {in_path} to {out_path}: Incorrect sudo password")
-            else:
-                raise AnsibleError(f"Failed to copy {in_path} to {out_path}: {e.output.decode().strip()}")
+            raise AnsibleError(f"Failed to copy {in_path} to {out_path}: {stderr.strip()}")
         except Exception as e:
             raise AnsibleError(f"Failed to copy {in_path} to {out_path}: {str(e)}")
+
+        if p.returncode != 0:
+            raise AnsibleError(f"Failed to copy {in_path} to {out_path}: {stderr.strip()}")
+
+        display.vvv(f"File {out_path} successfully uploaded", host=self.host)
+
+
+
+
+
+
+    # def put_file(self, in_path, out_path):
+    #     """Copy file to container through Proxmox host using pct exec and Here-Document"""
+    #     super(Connection, self).put_file(in_path, out_path)
+    #     if not os.path.exists(to_bytes(in_path, errors="surrogate_or_strict")):
+    #         raise AnsibleFileNotFound(f"file or module does not exist: {to_native(in_path)}")
+
+    #     with open(in_path, "rb") as in_f:
+    #         in_data = in_f.read()
+
+    #     become_pass = self._play_context.become_pass
+    #     pct_exec_cmd = [
+    #         'ssh', self.host,
+    #         'echo', become_pass, '|', 'sudo', '-S',
+    #         'pct', 'exec', str(self.container_name), '--',
+    #         '/bin/sh', '-c', f"cat {in_data} >  {shlex.quote(out_path)}"
+    #     ]
+
+    #     display.vvv(f"PUT {in_path} TO {out_path}", host=self.host)
+    #     display.vvv(f"pct_exec_cmd {pct_exec_cmd}", host=self.host)
+
+    #     try:
+    #         subprocess.check_call(
+    #             pct_exec_cmd,
+    #             stdin=subprocess.PIPE,
+    #             stderr=subprocess.STDOUT,
+    #             universal_newlines=False
+    #         )
+    #         display.vvv(f"File {out_path} successfully uploaded", host=self.host)
+    #     except subprocess.CalledProcessError as e:
+    #         if 'sudo: a password is required' in e.output.decode():
+    #             raise AnsibleError(f"Failed to copy {in_path} to {out_path}: Incorrect sudo password")
+    #         else:
+    #             raise AnsibleError(f"Failed to copy {in_path} to {out_path}: {e.output.decode().strip()}")
+    #     except Exception as e:
+    #         raise AnsibleError(f"Failed to copy {in_path} to {out_path}: {str(e)}")
 
 
 

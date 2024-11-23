@@ -1,0 +1,17 @@
+---
+- name: "Service: mariadb"
+  hosts: mariadb_servers
+  become: true
+  vars:
+    mysql_password: "FOr23$me2night"
+    mariadb_state: present
+    mariadb_security: true
+    mysql_users:
+      - user: app_user
+        password: ''
+      - user: app_user1
+        password: ''
+      - user: backup_user
+        password: 'foo!23#lbar'
+  roles:
+    - mariadb
