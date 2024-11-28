@@ -1,0 +1,9 @@
+---
+- name: "Service: mailsvc"
+  hosts: mariadb_servers
+  become: true
+  vars:
+    mysql_password: ""
+    mariadb_security: true
+  roles:
+    - mailsvc

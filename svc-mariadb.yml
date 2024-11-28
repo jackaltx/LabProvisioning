@@ -3,8 +3,7 @@
   hosts: mariadb_servers
   become: true
   vars:
-    mysql_password: "FOr23$me2night"
-    mariadb_state: present
+    mysql_password: ""
     mariadb_security: true
     mysql_users:
       - user: app_user
