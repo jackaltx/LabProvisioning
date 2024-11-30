@@ -1,0 +1,54 @@
+---
+- name: "Install wireguard"
+  hosts: provisioner
+  tasks:
+
+  - name: "install Wireguard on Debian"
+    ansible.builtin.apt:
+      update_cache: true
+      pkg:
+      - wireguard
+    when:
+      - ansible_os_family == 'Debian'
+    become: true
+
+  - name: "install Wireguard on RHEL"
+    ansible.builtin.dnf:
+      pkg:
+      - wireguard-tools
+    when:
+      - ansible_os_family == 'RedHat'
+    become: true
+
+
+  - name: :"check if /etc/wireguard exists"
+    ansible.builtin.stat:
+      path: /etc/wireguard/publickey
+    register: wg_exists
+    become: true
+
+  - ansible.builtin.debug:
+      var: wg_exists
+
+  - name: "create /etc/wireguard"
+    ansible.builtin.file:
+      path: /etc/wireguard
+      state: directory     
+    become: true
+
+  - name: "wireguard"
+    ansible.builtin.shell:
+    args:
+      cmd:  "wg genkey | tee /etc/wireguard/private.key  | wg pubkey > /etc/wireguard/public.key"
+    when: not wg_exists.stat.exists
+    become: true
+
+  - name: "set wireguard conf permissions"
+    ansible.builtin.file:
+      path: "/etc/wireguard/{{ item }}"
+      mode: 0600
+    with_list:
+      -  publickey
+      -  privatekey
+    become: true
+
