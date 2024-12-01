@@ -1,0 +1,39 @@
+---
+- name: Initialize cluster clients with SSH key and sudo access
+  hosts: mylab
+  become: true
+  gather_facts: yes
+  vars:
+    local_pubkey: "{{ lookup('file', '~/.ssh/id_ed25519.pub') }}"
+
+  tasks:
+    - name: Add user to sudo group
+      ansible.builtin.user:
+        name: "{{ ansible_user }}"
+        groups: sudo
+        append: yes
+      when: ansible_password is defined
+
+    - name: Ensure .ssh directory exists
+      ansible.builtin.file:
+        path: "~/.ssh"
+        state: directory
+        mode: '0700'
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
+
+    - name: Create/update authorized_keys file
+      ansible.builtin.lineinfile:
+        path: "~/.ssh/authorized_keys"
+        create: yes
+        line: "{{ local_pubkey }}"
+        state: present
+        mode: '0600'
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
+
+    - name: Ensure sudo group exists
+      ansible.builtin.group:
+        name: sudo
+        state: present
+      when: ansible_password is defined

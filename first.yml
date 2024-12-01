@@ -1,26 +1,72 @@
 ---
-
-- name: Install basic packages (more later)
-  #hosts: clients
-  hosts: monitor2
-
+- name: Install basic packages
+  hosts: clients
   tasks:
-  
-  - name: "Basic Member Packages"
-    ansible.builtin.apt:
-      update_cache: true
-      pkg:
-      - vim
-      - sudo
-      - gpg
-      - openssl
-      - htop
-      - tree
-      - curl
-      - socat
-      - sudo
-      - gpg
-      - wget
-      - ca-certificates 
-      - net-tools
-    become: true
+    - name: Gather OS facts
+      ansible.builtin.setup:
+      become: true
+
+    - name: Install basic packages on Debian
+      ansible.builtin.apt:
+        update_cache: true
+        pkg:
+          - vim
+          - sudo
+          - gpg
+          - openssl
+          - htop
+          - tree
+          - curl
+          - socat
+          - sudo
+          - gpg
+          - wget
+          - ca-certificates
+          - net-tools
+      become: true
+      when: ansible_facts['os_family'] == "Debian" and ansible_facts['architecture'] != "armv7l" and ansible_facts['architecture'] != "aarch64"
+
+    - name: Install basic packages on Raspberry Pi OS
+      ansible.builtin.apt:
+        update_cache: true
+        pkg:
+          - vim
+          - sudo
+          - gpg
+          - openssl
+          - htop
+          - tree
+          - curl
+          - socat
+          - sudo
+          - gpg
+          - wget
+          - ca-certificates
+          - net-tools
+          - raspi-config    # Raspberry Pi specific
+          - rpi-eeprom     # Raspberry Pi specific
+      become: true
+      when: >
+        ansible_facts['os_family'] == "Debian" and
+        (ansible_facts['architecture'] == "armv7l" or ansible_facts['architecture'] == "aarch64") and
+        ansible_facts['lsb']['id'] in ['Raspbian', 'Debian']
+
+    - name: Install basic packages on Rocky
+      ansible.builtin.dnf:
+        update_cache: true
+        name:
+          - vim
+          - sudo
+          - gnupg2
+          - openssl
+          - htop
+          - tree
+          - curl
+          - socat
+          - sudo
+          - gnupg2
+          - wget
+          - ca-certificates
+          - net-tools
+      become: true
+      when: ansible_facts['os_family'] == "RedHat"

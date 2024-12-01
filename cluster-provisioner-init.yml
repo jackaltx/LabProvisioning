@@ -1,0 +1,57 @@
+---
+- name: Clean and rebuild SSH known hosts
+  hosts: provisioner
+  gather_facts: no
+  vars:
+    known_hosts_file: "~/.ssh/known_hosts"
+    known_hosts_backup: "~/.ssh/known_hosts.backup.{{ ansible_date_time.epoch }}"
+  tasks:
+    - name: Backup existing known_hosts file if it exists
+      ansible.builtin.copy:
+        src: "{{ known_hosts_file }}"
+        dest: "{{ known_hosts_backup }}"
+        remote_src: yes
+        mode: '0644'
+      ignore_errors: yes
+      connection: local
+
+    - name: Remove existing known_hosts file
+      ansible.builtin.file:
+        path: "{{ known_hosts_file }}"
+        state: absent
+      connection: local
+
+    - name: Create empty known_hosts file with correct permissions
+      ansible.builtin.file:
+        path: "{{ known_hosts_file }}"
+        state: touch
+        mode: '0644'
+      connection: local
+
+    - name: Add localhost keys
+      ansible.builtin.shell: "ssh-keyscan -H localhost >> {{ known_hosts_file }}"
+      register: localhost_scan
+      connection: local
+      changed_when: localhost_scan.rc == 0
+      failed_when: localhost_scan.rc != 0
+
+    - name: Add provisioner IP keys
+      ansible.builtin.shell: "ssh-keyscan -H {{ ansible_host }} >> {{ known_hosts_file }}"
+      register: provisioner_scan
+      connection: local
+      changed_when: provisioner_scan.rc == 0
+      failed_when: provisioner_scan.rc != 0
+
+- name: Add cluster node keys
+  hosts: mylab
+  gather_facts: no
+  tasks:
+    - name: Add inventory host keys for cluster nodes
+      ansible.builtin.shell: "ssh-keyscan -H {{ ansible_host }} >> ~/.ssh/known_hosts"
+      delegate_to: localhost
+      register: node_scan
+      when: mylab_non_ssh | default(false) == false
+      changed_when: node_scan.rc == 0
+      failed_when: node_scan.rc != 0
+      run_once: false
+      
