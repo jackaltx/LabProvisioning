@@ -1,39 +1,96 @@
 ---
-- name: Initialize cluster clients with SSH key and sudo access
+- name: Collect system facts and service information
   hosts: mylab
-  become: true
-  gather_facts: yes
+  gather_facts: no
+  serial: 8
   vars:
-    local_pubkey: "{{ lookup('file', '~/.ssh/id_ed25519.pub') }}"
+    facts_dir: "{{ lookup('env', 'PWD') }}/facts"
+    current_user: "{{ lookup('env', 'USER') }}"
 
   tasks:
-    - name: Add user to sudo group
-      ansible.builtin.user:
-        name: "{{ ansible_user }}"
-        groups: sudo
-        append: yes
-      when: ansible_password is defined
-
-    - name: Ensure .ssh directory exists
+    - name: Ensure facts directory exists
+      run_once: true
+      delegate_to: localhost
       ansible.builtin.file:
-        path: "~/.ssh"
+        path: "{{ facts_dir }}"
         state: directory
-        mode: '0700'
-        owner: "{{ ansible_user }}"
-        group: "{{ ansible_user }}"
+        owner: "{{ current_user }}"
+        mode: '0750'
+      register: dir_creation
 
-    - name: Create/update authorized_keys file
-      ansible.builtin.lineinfile:
-        path: "~/.ssh/authorized_keys"
-        create: yes
-        line: "{{ local_pubkey }}"
-        state: present
-        mode: '0600'
-        owner: "{{ ansible_user }}"
-        group: "{{ ansible_user }}"
+    - name: Collect and store system facts
+      when: not mylab_non_ssh | default(false)
+      block:
+        - name: Gather system facts
+          ansible.builtin.setup:
+            gather_subset:
+              - '!all'
+              - system
+              - architecture
+              - all_ipv4_addresses
+              - all_ipv6_addresses
+              - facter
+          register: facts_result
+          ignore_unreachable: true
 
-    - name: Ensure sudo group exists
-      ansible.builtin.group:
-        name: sudo
-        state: present
-      when: ansible_password is defined
+        - name: Remove old fact files if they exist
+          delegate_to: localhost
+          ansible.builtin.file:
+            path: "{{ facts_dir }}/{{ inventory_hostname }}.json"
+            state: absent
+          when: facts_result is success
+
+        - name: Store current system facts
+          delegate_to: localhost
+          ansible.builtin.copy:
+            content: "{{ facts_result | to_nice_json(indent=2) }}"
+            dest: "{{ facts_dir }}/{{ inventory_hostname }}.json"
+            owner: "{{ current_user }}"
+            mode: '0664'
+          when: facts_result is success
+          ignore_unreachable: true
+
+        - name: Gather service facts
+          ansible.builtin.service_facts:
+          register: service_result
+          ignore_unreachable: true
+
+        - name: Remove old service facts if they exist
+          delegate_to: localhost
+          ansible.builtin.file:
+            path: "{{ facts_dir }}/{{ inventory_hostname }}-systemd.json"
+            state: absent
+          when: service_result is success
+
+        - name: Store current service facts
+          delegate_to: localhost
+          ansible.builtin.copy:
+            content: "{{ ansible_facts.services | to_nice_json(indent=2) }}"
+            dest: "{{ facts_dir }}/{{ inventory_hostname }}-systemd.json"
+            owner: "{{ current_user }}"
+            mode: '0664'
+          when: service_result is success
+          ignore_unreachable: true
+
+      rescue:
+        - name: Log failed fact collection
+          delegate_to: localhost
+          ansible.builtin.copy:
+            content: |
+              Failed to collect facts at {{ ansible_date_time.iso8601 }}
+              Error: {{ ansible_failed_result | default('Unknown error') }}
+            dest: "{{ facts_dir }}/{{ inventory_hostname }}-error.log"
+            owner: "{{ current_user }}"
+            mode: '0664'
+
+  post_tasks:
+    - name: Summarize fact collection
+      run_once: true
+      delegate_to: localhost
+      ansible.builtin.debug:
+        msg: |
+          Facts collection summary:
+          - Directory: {{ facts_dir }}
+          - Successful hosts: {{ ansible_play_batch | length }}
+          - Failed hosts: {{ ansible_play_batch | difference(ansible_play_hosts_all) | length }}
+      when: not ansible_check_mode
