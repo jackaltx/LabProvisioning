@@ -1,4 +1,9 @@
 ---
+
+#  This is a pure testing system.  No DNS, no external connections
+#  Tried LXC...access issues.
+#  Come back to this...fix the ip address and start hardening.
+
 - name: "Configure Monitor2"
   hosts: monitor2
   

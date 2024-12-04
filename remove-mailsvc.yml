@@ -1,0 +1,14 @@
+---
+
+- name: Total Removal
+  hosts: mariadb_servers
+  become: true    # this sucks
+
+  vars:
+    mailsvc_state: absent
+    mailsvc_remove_config: true
+    mailsvc_remove_data: true
+
+  roles:
+    - mailsvc
+    #- mariadb
