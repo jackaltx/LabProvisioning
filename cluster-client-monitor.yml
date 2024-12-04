@@ -2,5 +2,5 @@
 - name: "Configure Client monitoring"
   hosts: clients
   roles:
-    #- telegraf
+    - telegraf
     - alloy
