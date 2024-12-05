@@ -1,5 +1,4 @@
 ---
-
 - name: Total Removal
   hosts: monitor2
 
@@ -21,13 +20,10 @@
     loki_delete_data: false
 
   roles:
-
     # clients
     - telegraf
-    - alloy
-    
+    #- alloy
+
     # services
     - influxdb
-    - loki
-
-
+    #- loki
