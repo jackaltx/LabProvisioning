@@ -48,7 +48,12 @@ all:
         mariadb_servers:
           hosts:
             mailsvc0:
-            
+
+        #......................................
+        mail_servers:
+          hosts:
+            mailsvc0:
+
         #......................................
         lxc_containers:
           hosts:

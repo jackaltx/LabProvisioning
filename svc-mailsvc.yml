@@ -3,7 +3,7 @@
 #  What I do need is a mail service, this is an attempt to wean off ISPConfig 
 
 - name: "Service: mailsvc"
-  hosts: mariadb_servers
+  hosts: mail_servers
   become: true
   vars:
     mysql_password: ""
