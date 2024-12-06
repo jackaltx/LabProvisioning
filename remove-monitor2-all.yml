@@ -22,8 +22,8 @@
   roles:
     # clients
     - telegraf
-    #- alloy
+    - alloy
 
     # services
     - influxdb
-    #- loki
+    - loki
