@@ -118,6 +118,7 @@ all:
                   fstype: nfs4
 
             monitor2:
+              influxdb_nfs: true
               influxdb_data_path: "/opt/influxdb"
               influxdb_cert: ""
               influxdb_key: ""
