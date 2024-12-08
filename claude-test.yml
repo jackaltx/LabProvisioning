@@ -1,0 +1,25 @@
+---
+- name: Print root
+  hosts: localhost
+  gather_facts: false
+  tasks:
+  - name: Debug vars
+    debug:
+      msg: "Available vars: {{ vars | to_nice_yaml }}"
+      
+  - name: Get current directory
+    command: pwd
+    register: pwd_output
+    
+  - name: Show current directory
+    debug:
+      msg: "Current directory: {{ pwd_output.stdout }}"
+
+  - name: Check for ansible.cfg
+    stat:
+      path: "{{ pwd_output.stdout }}/ansible.cfg"
+    register: cfg_file
+
+  - name: Show ansible.cfg status
+    debug:
+      msg: "ansible.cfg exists: {{ cfg_file.stat.exists }}"

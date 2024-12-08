@@ -1,0 +1,134 @@
+=== InfluxDB Molecule Test Results ===
+Timestamp: 2024-12-08T06:04:10Z
+
+Version Information:
+Influx CLI dev (git: a79a2a1b825867421d320428538f76a4c90aa34c) build_date: 2024-04-16T14:34:32Z
+
+Configuration Status:
+default:
+    active: true
+    org: lavnet
+    token: x_T8c3Sv8YgSMP0mDRKGYiN3ajUo5rWnsqz-uKcxytESMPrJaX5yX739UUH4qNWQ0VZJtnWyCGM7C77bfGldag==
+    url: http://localhost:8086
+
+
+Buckets:
+-   createdAt: '2024-12-08T06:04:06.645588679Z'
+    description: System bucket for monitoring logs
+    id: fd9b674917d7aad8
+    labels: []
+    links:
+        labels: /api/v2/buckets/fd9b674917d7aad8/labels
+        members: /api/v2/buckets/fd9b674917d7aad8/members
+        org: /api/v2/orgs/a4ee0bab1ae624ce
+        owners: /api/v2/buckets/fd9b674917d7aad8/owners
+        self: /api/v2/buckets/fd9b674917d7aad8
+        write: /api/v2/write?org=a4ee0bab1ae624ce&bucket=fd9b674917d7aad8
+    name: _monitoring
+    orgID: a4ee0bab1ae624ce
+    retentionRules:
+    -   everySeconds: 604800
+        shardGroupDurationSeconds: 86400
+        type: expire
+    type: system
+    updatedAt: '2024-12-08T06:04:06.645588763Z'
+-   createdAt: '2024-12-08T06:04:06.642518173Z'
+    description: System bucket for task logs
+    id: 9c09003d54886976
+    labels: []
+    links:
+        labels: /api/v2/buckets/9c09003d54886976/labels
+        members: /api/v2/buckets/9c09003d54886976/members
+        org: /api/v2/orgs/a4ee0bab1ae624ce
+        owners: /api/v2/buckets/9c09003d54886976/owners
+        self: /api/v2/buckets/9c09003d54886976
+        write: /api/v2/write?org=a4ee0bab1ae624ce&bucket=9c09003d54886976
+    name: _tasks
+    orgID: a4ee0bab1ae624ce
+    retentionRules:
+    -   everySeconds: 259200
+        shardGroupDurationSeconds: 86400
+        type: expire
+    type: system
+    updatedAt: '2024-12-08T06:04:06.642518244Z'
+-   createdAt: '2024-12-08T06:04:07.444240237Z'
+    id: 267b6168a29deb97
+    labels: []
+    links:
+        labels: /api/v2/buckets/267b6168a29deb97/labels
+        members: /api/v2/buckets/267b6168a29deb97/members
+        org: /api/v2/orgs/a4ee0bab1ae624ce
+        owners: /api/v2/buckets/267b6168a29deb97/owners
+        self: /api/v2/buckets/267b6168a29deb97
+        write: /api/v2/write?org=a4ee0bab1ae624ce&bucket=267b6168a29deb97
+    name: metrics
+    orgID: a4ee0bab1ae624ce
+    retentionRules:
+    -   everySeconds: 0
+        shardGroupDurationSeconds: 604800
+        type: expire
+    type: user
+    updatedAt: '2024-12-08T06:04:07.444240318Z'
+-   createdAt: '2024-12-08T06:04:07.245892934Z'
+    id: ff1bbb9e00dc437d
+    labels: []
+    links:
+        labels: /api/v2/buckets/ff1bbb9e00dc437d/labels
+        members: /api/v2/buckets/ff1bbb9e00dc437d/members
+        org: /api/v2/orgs/a4ee0bab1ae624ce
+        owners: /api/v2/buckets/ff1bbb9e00dc437d/owners
+        self: /api/v2/buckets/ff1bbb9e00dc437d
+        write: /api/v2/write?org=a4ee0bab1ae624ce&bucket=ff1bbb9e00dc437d
+    name: oss_metrics
+    orgID: a4ee0bab1ae624ce
+    retentionRules:
+    -   everySeconds: 0
+        shardGroupDurationSeconds: 604800
+        type: expire
+    type: user
+    updatedAt: '2024-12-08T06:04:07.24589302Z'
+-   createdAt: '2024-12-08T06:04:07.041962614Z'
+    id: 55ff2dc882f9b1bc
+    labels: []
+    links:
+        labels: /api/v2/buckets/55ff2dc882f9b1bc/labels
+        members: /api/v2/buckets/55ff2dc882f9b1bc/members
+        org: /api/v2/orgs/a4ee0bab1ae624ce
+        owners: /api/v2/buckets/55ff2dc882f9b1bc/owners
+        self: /api/v2/buckets/55ff2dc882f9b1bc
+        write: /api/v2/write?org=a4ee0bab1ae624ce&bucket=55ff2dc882f9b1bc
+    name: telegraf
+    orgID: a4ee0bab1ae624ce
+    retentionRules:
+    -   everySeconds: 0
+        shardGroupDurationSeconds: 604800
+        type: expire
+    type: user
+    updatedAt: '2024-12-08T06:04:07.041962719Z'
+-   createdAt: '2024-12-08T06:04:06.650447346Z'
+    id: 44aec60824ceb961
+    labels: []
+    links:
+        labels: /api/v2/buckets/44aec60824ceb961/labels
+        members: /api/v2/buckets/44aec60824ceb961/members
+        org: /api/v2/orgs/a4ee0bab1ae624ce
+        owners: /api/v2/buckets/44aec60824ceb961/owners
+        self: /api/v2/buckets/44aec60824ceb961
+        write: /api/v2/write?org=a4ee0bab1ae624ce&bucket=44aec60824ceb961
+    name: telegrafco
+    orgID: a4ee0bab1ae624ce
+    retentionRules:
+    -   everySeconds: 0
+        shardGroupDurationSeconds: 604800
+        type: expire
+    type: user
+    updatedAt: '2024-12-08T06:04:06.650447437Z'
+
+
+Service Status:
+Running: True
+Enabled: True
+
+Storage Paths:
+Engine: /var/lib/influxdb/engine (True)
+Bolt DB: /var/lib/influxdb/influxd.bolt (True)
